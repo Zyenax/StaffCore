@@ -1,4 +1,4 @@
-main: warvale.core.plugin.Main
+main: warvale.core.plugin.StaffCore
 name: CTFCore
 version: 1.1.2
 author: Pixelific

@@ -1,4 +1,4 @@
-main: staff.core.plugin.Main
+main: staff.core.plugin.StaffCorefCore
 name: StaffCore
 version: 1.1.2
 author: Warvale
