@@ -1,0 +1,12 @@
+name: ${project.name}
+main: staff.core.plugin.StaffCore
+version: ${project.version}
+authors: [Aerh, Laep]
+commands:
+  ban:
+    description: Ban command.
+  kick:
+    description: Kick command.
+  s:
+    description: Staff chat.
+    aliases: [staffchat]
