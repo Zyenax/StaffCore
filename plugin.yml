@@ -5,5 +5,5 @@ author: Warvale
 description: Staff core plugin for Warvale
 commands:
   sc:
-    description: Test if the core of the plugin is functioning.
-    usage: /sc
+    description: Use staff chat.
+    usage: /s
