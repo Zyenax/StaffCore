@@ -10,12 +10,8 @@ import org.bukkit.entity.Player;
 import staff.core.plugin.StaffCore;
 
 public class KickCommand implements CommandExecutor {
-    StaffCore plugin;
 
-    public KickCommand(StaffCore plugin) {
-        this.plugin = plugin;
-    }
-
+    @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(!sender.hasPermission("warvale.punish")) {
             sender.sendMessage(ChatColor.RED + "You don't have permission to access this command.");
@@ -23,7 +19,7 @@ public class KickCommand implements CommandExecutor {
         }
 
         if(args.length < 1) {
-            sender.sendMessage(ChatColor.RED + "Not enough args!");
+            sender.sendMessage(ChatColor.RED + "Not enough arguments!");
             return true;
         } else {
             String reason = args.length > 1 ? StringUtils.join(args, ' ', 1, args.length) : "N/A";
