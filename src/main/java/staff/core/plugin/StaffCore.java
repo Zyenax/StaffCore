@@ -1,5 +1,7 @@
 package staff.core.plugin;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import staff.core.plugin.commands.GMCommand;
 import staff.core.plugin.commands.StaffChat;
