@@ -28,7 +28,7 @@ public class BanCommand implements CommandExecutor {
             return true;
         } else {
             String reason = args.length > 1 ? StringUtils.join(args, ' ', 1, args.length) : "N/A";
-            Bukkit.getBanList(BanList.Type.NAME).addBan(args[0], reason, null, sender.getName());
+            Bukkit.getBanList(BanList.Type.NAME).addBan(args[0], ChatColor.translateAlternateColorCodes('&', reason), null, sender.getName());
 
             Player player = Bukkit.getPlayer(args[0]);
             if (player != null) {
