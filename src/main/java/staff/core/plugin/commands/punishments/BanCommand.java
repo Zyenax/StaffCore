@@ -1,4 +1,4 @@
-package staff.core.plugin.commands.punishments;
+package main.java.staff.core.plugin.commands.punishments;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.BanList;

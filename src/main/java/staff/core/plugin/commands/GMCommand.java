@@ -1,4 +1,4 @@
-package staff.core.plugin.commands;
+package main.java.staff.core.plugin.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

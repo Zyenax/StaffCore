@@ -1,4 +1,4 @@
-package staff.core.plugin.listeners;
+package main.java.staff.core.plugin.listeners;
 
 import com.google.common.base.Strings;
 import org.bukkit.Bukkit;
