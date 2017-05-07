@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
- * Created by Callum for StaffCore.
+ * Created by Aerh for StaffCore.
  */
 public class StaffChat implements CommandExecutor {
 

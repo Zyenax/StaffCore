@@ -8,7 +8,7 @@ public class StaffCore extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        getCommand("sc").setExecutor(new StaffChat());
+        getCommand("s").setExecutor(new StaffChat());
     }
 
     @Override
