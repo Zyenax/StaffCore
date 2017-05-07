@@ -27,9 +27,9 @@ public class GMCommand implements CommandExecutor, Listener {
             p.sendMessage(ChatColor.RED + "Sorry, but you don't have permission to execute this command!");
             return true;
         }
-        muted ^= true;
+        setMuted(muted ^= true);
 
-        if (!muted)
+        if (!isMuted())
             Bukkit.broadcastMessage(ChatColor.RED + "Global mute has been deactivated.");
         else
             Bukkit.broadcastMessage(ChatColor.GREEN + "Global mute has been activated. This may be because we have found an issue.");
@@ -40,9 +40,17 @@ public class GMCommand implements CommandExecutor, Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
-        if(muted && !event.getPlayer().isOp()) {
+        if(isMuted() && !event.getPlayer().isOp()) {
             event.setCancelled(true);
             event.getPlayer().sendMessage(ChatColor.RED + "Chat has been disabled by an administrator.");
         }
+    }
+
+    public boolean isMuted() {
+        return muted;
+    }
+
+    public void setMuted(boolean muted) {
+        this.muted = muted;
     }
 }
