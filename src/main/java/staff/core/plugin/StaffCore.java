@@ -1,6 +1,7 @@
 package staff.core.plugin;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import staff.core.plugin.commands.GMCommand;
 import staff.core.plugin.commands.StaffChat;
 import staff.core.plugin.commands.punishments.BanCommand;
 import staff.core.plugin.commands.punishments.KickCommand;
@@ -13,8 +14,10 @@ public class StaffCore extends JavaPlugin {
         getCommand("s").setExecutor(new StaffChat());
         getCommand("ban").setExecutor(new BanCommand(this));
         getCommand("kick").setExecutor(new KickCommand(this));
+        getCommand("gmute").setExecutor(new GMCommand());
 
         getServer().getPluginManager().registerEvents(new FilterListener(), this);
+        getServer().getPluginManager().registerEvents(new GMCommand(), this);
     }
 
     @Override

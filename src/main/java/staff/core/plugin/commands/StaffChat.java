@@ -21,6 +21,7 @@ public class StaffChat implements CommandExecutor {
             if(args.length == 0) sender.sendMessage(ChatColor.RED + "Please include a message!");
             else
                 for(Player players : Bukkit.getOnlinePlayers()) {
+                if(players.hasPermission("warvale.staff"))
                     players.sendMessage(ChatColor.DARK_RED + "[STAFF] " + ChatColor.RESET + sender.getName() + ": " +
                             StringUtils.join(args, ' ', 0, args.length));
                 }

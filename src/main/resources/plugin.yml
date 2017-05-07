@@ -10,3 +10,5 @@ commands:
   s:
     description: Staff chat.
     aliases: [staffchat]
+  gmute:
+    description: Global mute.
