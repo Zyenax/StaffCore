@@ -28,7 +28,7 @@ public class BanCommand implements CommandExecutor {
             return true;
         } else {
             String reason = args.length > 1 ? StringUtils.join(args, ' ', 1, args.length) : "N/A";
-            Bukkit.getBanList(BanList.Type.NAME).addBan(args[0], ChatColor.translateAlternateColorCodes('&', reason), null, sender.getName());
+            Bukkit.getBanList(BanList.Type.NAME).addBan(args[0], ChatColor.translateAlternateColorCodes('&', "&cYou have been permanently banned from this server!\n\n&7Reason: &f" +  reason), null, sender.getName());
 
             Player player = Bukkit.getPlayer(args[0]);
             if (player != null) {
@@ -38,7 +38,7 @@ public class BanCommand implements CommandExecutor {
 
             Bukkit.broadcastMessage(" ");
             Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&',
-                    "&4[PUNISH] &b" + sender.getName() + " &7banned &b" + args[0] + " &7for &c" + reason));
+                    "&4[PUNISH] &b" + sender.getName() + " &7banned &b" + args[0] + " &7for &c" +reason));
             Bukkit.broadcastMessage(" ");
         }
         return true;
