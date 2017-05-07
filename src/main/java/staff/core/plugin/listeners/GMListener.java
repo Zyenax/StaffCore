@@ -14,7 +14,7 @@ public class GMListener implements Listener {
         Player p = e.getPlayer();
 
         if(GMCommand.ismuted && !p.hasPermission("warvale.staff")) {
-            p.sendMessage("§cThe chat is currently muted! Please wait whilst we resolve the problem.");
+            p.sendMessage("§cThe chat is currently muted! Please wait whilst we resolve the problem, please be patient.");
             e.setCancelled(true);
         }
     }
