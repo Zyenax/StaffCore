@@ -1,4 +1,4 @@
-package main.java.staff.core.plugin.commands;
+package me.warvale.staffcore.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

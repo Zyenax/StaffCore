@@ -1,7 +1,5 @@
-package main.java.staff.core.plugin.listeners;
+package me.warvale.staffcore.listeners;
 
-import com.google.common.base.Strings;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

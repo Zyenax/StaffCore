@@ -1,13 +1,13 @@
-package staff.core.plugin;
+package me.warvale.staffcore;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import main.java.staff.core.plugin.commands.GMCommand;
-import main.java.staff.core.plugin.commands.StaffChat;
-import main.java.staff.core.plugin.commands.punishments.BanCommand;
-import main.java.staff.core.plugin.commands.punishments.IPCommand;
-import main.java.staff.core.plugin.commands.punishments.KickCommand;
-import main.java.staff.core.plugin.commands.punishments.WarnCommand;
-import main.java.staff.core.plugin.listeners.FilterListener;
+import me.warvale.staffcore.commands.GMCommand;
+import me.warvale.staffcore.commands.StaffChat;
+import me.warvale.staffcore.commands.punishments.BanCommand;
+import me.warvale.staffcore.commands.punishments.IPCommand;
+import me.warvale.staffcore.commands.punishments.KickCommand;
+import me.warvale.staffcore.commands.punishments.WarnCommand;
+import me.warvale.staffcore.listeners.FilterListener;
 
 public class StaffCore extends JavaPlugin {
 
