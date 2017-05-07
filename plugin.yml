@@ -7,3 +7,6 @@ commands:
   sc:
     description: Use staff chat.
     usage: /s
+  globalmute:
+    description: Mute the chat.
+    usage: /globalmute
