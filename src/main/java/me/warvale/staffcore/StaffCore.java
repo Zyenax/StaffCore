@@ -1,5 +1,6 @@
 package me.warvale.staffcore;
 
+import me.warvale.staffcore.commands.TPCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.warvale.staffcore.commands.GMCommand;
 import me.warvale.staffcore.commands.StaffChat;
@@ -19,6 +20,7 @@ public class StaffCore extends JavaPlugin {
         getCommand("gmute").setExecutor(new GMCommand());
         getCommand("warn").setExecutor(new WarnCommand());
         getCommand("ip").setExecutor(new IPCommand());
+        getCommand("tp").setExecutor(new TPCommand());
 
         getServer().getPluginManager().registerEvents(new FilterListener(), this);
         getServer().getPluginManager().registerEvents(new GMCommand(), this);
