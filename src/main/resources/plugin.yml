@@ -11,6 +11,6 @@ commands:
     description: Staff chat.
     aliases: [staffchat]
   gmute:
-    description: Global mute.
+    description: Global mute for whole chat.
   tp:
     description: Teleport command.
