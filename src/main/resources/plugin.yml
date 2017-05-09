@@ -1,5 +1,5 @@
 name: ${project.name}
-main: staff.core.plugin.StaffCore
+main: me.warvale.staffcore.StaffCore
 version: ${project.version}
 authors: [Aerh, Laep]
 commands:
