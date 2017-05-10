@@ -1,6 +1,6 @@
-name: ${project.name}
+name: StaffCore
 main: me.warvale.staffcore.StaffCore
-version: ${project.version}
+version: 1.0.0
 authors: [Aerh, Laep]
 commands:
   ban:
@@ -14,3 +14,5 @@ commands:
     description: Global mute for whole chat.
   tp:
     description: Teleport command.
+  alert:
+    description: Broadcast a message.
