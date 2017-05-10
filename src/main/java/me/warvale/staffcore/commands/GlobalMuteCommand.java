@@ -11,7 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 
-public class GMCommand implements CommandExecutor, Listener {
+public class GlobalMuteCommand implements CommandExecutor, Listener {
     boolean muted;
 
     @Override

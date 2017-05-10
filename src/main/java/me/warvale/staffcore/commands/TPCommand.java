@@ -26,7 +26,7 @@ public class TPCommand implements CommandExecutor {
             p.sendMessage(ChatColor.RED + "That player is currently not online!");
         } else {
             p.teleport(target.getLocation());
-            p.sendMessage(ChatColor.GREEN + "Successfully teleported to: " + target);
+            p.sendMessage(ChatColor.GREEN + "Successfully teleported to: " + target.getName());
         }
 
         return false;
