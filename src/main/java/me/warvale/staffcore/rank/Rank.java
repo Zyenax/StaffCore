@@ -8,8 +8,27 @@ import java.util.List;
  */
 public class Rank {
 
-    public Rank(String name, String prefix, boolean staff, List<Rank> parents, List<Permission> permissions) {
+    private String id;
+    private String name;
+    private String prefix;
+    private boolean staff;
+    private List<Rank> parents;
+    private List<Permission> permissions;
 
+    public Rank(String name, String prefix, boolean staff, List<Rank> parents, List<Permission> permissions) {
+        this.id = simplify(name);
+        this.name = name;
+        this.prefix = prefix;
+        this.parents = parents;
+        this.permissions = permissions;
+    }
+
+    public static String simplify(String str1) {
+        return str1.toLowerCase().replaceAll(" ", "-")
+                .replaceAll("moderator", "mod")
+                .replaceAll("senior", "sr")
+                .replaceAll("junior", "jr")
+                .replaceAll("administrator", "admin");
     }
 
 }
