@@ -24,7 +24,7 @@ public class IPCommand implements CommandExecutor {
             return true;
         }
 
-        Player player = Bukkit.getPlayer(args[1]);
+        Player player = Bukkit.getPlayer(args[0]);
         if (!(player == null)) {
             sender.sendMessage(ChatColor.GREEN + player.getName() + "'s IP: " + ChatColor.WHITE + player.getAddress().getAddress().getHostAddress() + " : " + player.getAddress().getPort());
         } else {
