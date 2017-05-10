@@ -1,6 +1,16 @@
 package me.warvale.staffcore.rank;
 
+import org.bukkit.entity.Player;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.security.Permission;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,12 +25,17 @@ public class Rank {
     private List<Rank> parents;
     private List<Permission> permissions;
 
-    public Rank(String name, String prefix, boolean staff, List<Rank> parents, List<Permission> permissions) {
+    private List<Player> players;
+
+    public Rank(String name, String prefix, boolean staff, List<Rank> parents, List<Permission> permissions) throws IOException, ParseException {
         this.id = simplify(name);
         this.name = name;
         this.prefix = prefix;
         this.parents = parents;
         this.permissions = permissions;
+        this.players = new ArrayList<>();
+
+
     }
 
     public String getId() {
@@ -69,6 +84,14 @@ public class Rank {
 
     public void setPermissions(List<Permission> permissions) {
         this.permissions = permissions;
+    }
+
+    public void addMember(Player player) {
+        this.players.add(player);
+    }
+
+    public List<Player> getMembers() {
+        return this.players;
     }
 
     public static String simplify(String str1) {
