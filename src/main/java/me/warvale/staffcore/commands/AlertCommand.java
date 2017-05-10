@@ -7,9 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-/**
- * Created by shallam on 10/05/2017.
- */
+
 public class AlertCommand implements CommandExecutor {
 
     @Override

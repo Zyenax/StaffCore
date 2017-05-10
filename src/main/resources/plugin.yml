@@ -15,4 +15,4 @@ commands:
   tp:
     description: Teleport command.
   alert:
-    description: Broadcast a message.
+    description: Broadcast a message to the server.
