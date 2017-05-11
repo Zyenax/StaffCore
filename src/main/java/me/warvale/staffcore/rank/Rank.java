@@ -24,74 +24,115 @@ public class Rank {
     private boolean staff;
     private List<Rank> parents;
     private List<Permission> permissions;
+    private String namecolor;
 
     private List<Player> players;
 
-    public Rank(String name, String prefix, boolean staff, List<Rank> parents, List<Permission> permissions) throws IOException, ParseException {
+    public Rank(String name, String prefix, boolean staff, List<Rank> parents, List<Permission> permissions, String namecolor) throws IOException, ParseException {
         this.id = simplify(name);
         this.name = name;
         this.prefix = prefix;
         this.parents = parents;
         this.permissions = permissions;
         this.players = new ArrayList<>();
+        this.namecolor = namecolor;
 
-
+        RankManager.addRank(this);
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(String id) {
         this.id = id;
+        RankManager.updateRank(this);
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
         this.name = name;
+        RankManager.updateRank(this);
     }
 
     public String getPrefix() {
-        return prefix;
+        return this.prefix;
     }
 
     public void setPrefix(String prefix) {
         this.prefix = prefix;
+        RankManager.updateRank(this);
     }
 
     public boolean isStaff() {
-        return staff;
+        return this.staff;
     }
 
     public void setStaff(boolean staff) {
         this.staff = staff;
+        RankManager.updateRank(this);
     }
 
     public List<Rank> getParents() {
-        return parents;
+        return this.parents;
     }
 
     public void setParents(List<Rank> parents) {
         this.parents = parents;
+        RankManager.updateRank(this);
     }
 
     public List<Permission> getPermissions() {
-        return permissions;
+        return this.permissions;
     }
 
     public void setPermissions(List<Permission> permissions) {
         this.permissions = permissions;
+        RankManager.updateRank(this);
     }
 
     public void addMember(Player player) {
         this.players.add(player);
+        RankManager.updateRank(this);
+    }
+
+    public String getNamecolor() {
+        return this.namecolor;
+    }
+
+    public void setNamecolor(String namecolor) {
+        this.namecolor = namecolor;
+        RankManager.updateRank(this);
     }
 
     public List<Player> getMembers() {
         return this.players;
+    }
+
+    public Object get(String key) {
+        switch (key) {
+            case "id":
+                return this.id;
+            case "name":
+                return this.name;
+            case "prefix":
+                return this.prefix;
+            case "staff":
+                return this.staff;
+            case "namecolor":
+                return this.namecolor;
+            case "permissions":
+                return this.permissions;
+            case "members":
+                return this.players;
+            case "parents":
+                return this.parents;
+            default:
+                return null;
+        }
     }
 
     public static String simplify(String str1) {

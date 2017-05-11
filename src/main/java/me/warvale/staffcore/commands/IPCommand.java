@@ -1,4 +1,4 @@
-package me.warvale.staffcore.commands.punishments;
+package me.warvale.staffcore.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,12 +19,13 @@ public class IPCommand implements CommandExecutor {
             return true;
         }
 
-        if (args.length != 2) {
-            sender.sendMessage(args.length > 2 ? ChatColor.RED + "Not enough arguments." : ChatColor.RED + "Too many arguments.");
+        if (args.length != 1) {
+            sender.sendMessage(args.length > 1 ? ChatColor.RED + "Not enough arguments." : ChatColor.RED + "Too many arguments.");
             return true;
         }
 
         Player player = Bukkit.getPlayer(args[0]);
+
         if (!(player == null)) {
             sender.sendMessage(ChatColor.GREEN + player.getName() + "'s IP: " + ChatColor.WHITE + player.getAddress().getAddress().getHostAddress() + " : " + player.getAddress().getPort());
         } else {

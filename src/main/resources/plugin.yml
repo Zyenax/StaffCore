@@ -1,4 +1,4 @@
-name: ${project.name}
+name: Staffcore
 main: me.warvale.staffcore.StaffCore
 version: ${project.version}
 authors: [Aerh, Laep]
@@ -12,5 +12,9 @@ commands:
     aliases: [staffchat]
   gmute:
     description: Global mute for whole chat.
+  warn:
+    description: Warns a player.
+  ip:
+    description: Checks the IP of a player.
   tp:
     description: Teleport command.

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="StaffCore:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/StaffCore_jar</output-path>
+    <root id="archive" name="StaffCore.jar">
+      <element id="module-output" name="StaffCore" />
+    </root>
+  </artifact>
+</component>
