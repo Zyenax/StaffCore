@@ -1,6 +1,6 @@
-name: Staffcore
+name: StaffCore
 main: me.warvale.staffcore.StaffCore
-version: ${project.version}
+version: 1.0.0
 authors: [Aerh, Laep]
 commands:
   ban:
@@ -12,9 +12,7 @@ commands:
     aliases: [staffchat]
   gmute:
     description: Global mute for whole chat.
-  warn:
-    description: Warns a player.
-  ip:
-    description: Checks the IP of a player.
   tp:
     description: Teleport command.
+  alert:
+    description: Broadcast a message to the server.

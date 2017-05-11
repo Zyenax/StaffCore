@@ -1,5 +1,6 @@
 package me.warvale.staffcore;
 
+import me.warvale.staffcore.commands.AlertCommand;
 import me.warvale.staffcore.commands.TPCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.warvale.staffcore.commands.GlobalMuteCommand;
@@ -23,6 +24,7 @@ public class StaffCore extends JavaPlugin {
         getCommand("warn").setExecutor(new WarnCommand());
         getCommand("ip").setExecutor(new IPCommand());
         getCommand("tp").setExecutor(new TPCommand());
+        getCommand("alert").setExecutor(new AlertCommand());
 
         getServer().getPluginManager().registerEvents(new FilterListener(), this);
         getServer().getPluginManager().registerEvents(new GlobalMuteCommand(), this);
