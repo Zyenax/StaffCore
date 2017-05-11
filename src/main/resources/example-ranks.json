@@ -1,43 +1,73 @@
 {
   "ranks": [
     {
-      "id": "default", -> Rank ID
-      "name": "Default", -> Rank display name > "Your rank has been updated to <name>!"
-      "prefix": "&7", -> Rank prefix
-      "staff": false, -> Should it have access to staff related stuff?
-      "permissions":[ -> Permissions
+      "id": "default",
+      "name": "Default",
+      "prefix": "&7",
+      "namecolor": "&f",
+      "staff": false,
+      "parents":[
+        ""
+      ],
+      "permissions":[
         "permission1",
         "permission2"
+      ],
+      "member": [
+        "rEWrrJRjr"
       ]
     },
     {
       "id": "jr-mod",
       "name": "Junior Moderator",
       "prefix": "&e[JR MOD] ",
+      "namecolor": "&f",
       "staff": true,
-      "parent": "default", -> What group should the parent be? All permissions from the chosen group are inherited
+      "parents": [
+        "default"
+      ],
       "permissions":[
         "staff.permission"
+      ],
+      "member": [
+        "kawaii"
       ]
     },
     {
       "id": "moderator",
       "name": "Moderator",
       "prefix": "&e[MOD] ",
+      "namecolor": "&f",
       "staff": true,
-      "parent": "jr-mod",
+      "parents": [
+        "default",
+        "jr-mod"
+      ],
       "permissions":[
         "moderator.permissions.here"
+      ],
+      "member": [
+        "joey"
       ]
     },
     {
       "id": "admin",
       "name": "Administrator",
       "prefix": "&c[ADMIN] ",
+      "namecolor": "&f",
       "staff": true,
-      "parent": "moderator",
+      "parents": [
+        "default",
+        "jr-mod",
+        "mod"
+      ],
       "permissions": [
         "LMAO!!"
+      ],
+      "member": [
+        "draem",
+        "aerh",
+        "pixelific"
       ]
     }
   ]
