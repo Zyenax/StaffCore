@@ -12,7 +12,30 @@ commands:
     aliases: [staffchat]
   gmute:
     description: Global mute for whole chat.
+  ip:
+    description: Displays the IP of a user.
   tp:
     description: Teleport command.
   alert:
     description: Broadcast a message to the server.
+  rank:
+    description: Manages the ranks.
+
+permissions:
+  warvale.*:
+    description: Gives access to all Rank commands.
+    children:
+      warvale.management: true
+      warvale.staff: true
+      warvale.punish: true
+  warvale.management:
+    description: Rank Management
+    default: false
+  warvale.staff:
+    description: Allows your to access
+    default: false
+    children:
+      warvale.punish: true
+  warvale.punish:
+    description: Allows you to punish other users
+    default: op

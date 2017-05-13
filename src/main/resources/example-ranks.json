@@ -39,10 +39,7 @@
       "prefix": "&e[MOD] ",
       "namecolor": "&f",
       "staff": true,
-      "parents": [
-        "default",
-        "jr-mod"
-      ],
+      "parents": "default",
       "permissions":[
         "moderator.permissions.here"
       ],
@@ -56,18 +53,14 @@
       "prefix": "&c[ADMIN] ",
       "namecolor": "&f",
       "staff": true,
-      "parents": [
-        "default",
-        "jr-mod",
-        "mod"
-      ],
+      "parents": "mod",
       "permissions": [
-        "LMAO!!"
+        "*"
       ],
       "member": [
-        "draem",
-        "aerh",
-        "pixelific"
+        "Draem",
+        "Aerh",
+        "Pixelific"
       ]
     }
   ]

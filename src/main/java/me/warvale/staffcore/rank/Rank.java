@@ -1,5 +1,6 @@
 package me.warvale.staffcore.rank;
 
+import com.google.gson.Gson;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
@@ -22,23 +23,47 @@ public class Rank {
     private String name;
     private String prefix;
     private boolean staff;
-    private List<Rank> parents;
-    private List<Permission> permissions;
+    private String parent;
+    private List<String> permissions;
     private String namecolor;
 
-    private List<Player> players;
+    private List<String> players;
 
-    public Rank(String name, String prefix, boolean staff, List<Rank> parents, List<Permission> permissions, String namecolor) throws IOException, ParseException {
+    public Rank(String name, String prefix, boolean staff, String parent, List<String> permissions, String namecolor, boolean add) throws IOException, ParseException {
+        if (RankManager.getRankByName(name) != null) {
+            return;
+        }
+
         this.id = simplify(name);
         this.name = name;
+        this.staff = staff;
         this.prefix = prefix;
-        this.parents = parents;
+        this.parent = parent;
         this.permissions = permissions;
         this.players = new ArrayList<>();
         this.namecolor = namecolor;
 
-        RankManager.addRank(this);
+        if (add) RankManager.addRank(this);
     }
+
+    public Rank(String name, String prefix, boolean staff, String parent, List<String> permissions, String namecolor, boolean add, List<String> members) throws IOException, ParseException {
+        if (RankManager.getRankByName(name) != null) {
+            return;
+        }
+
+        this.id = simplify(name);
+        this.name = name;
+        this.staff = staff;
+        this.prefix = prefix;
+        this.parent = parent;
+        this.permissions = permissions;
+        this.players = members;
+        this.namecolor = namecolor;
+
+        if (add) RankManager.addRank(this); else RankManager.getRanks().add(this);
+    }
+
+
 
     public String getId() {
         return this.id;
@@ -76,26 +101,31 @@ public class Rank {
         RankManager.updateRank(this);
     }
 
-    public List<Rank> getParents() {
-        return this.parents;
+    public String getParents() {
+        return this.parent;
     }
 
     public void setParents(List<Rank> parents) {
-        this.parents = parents;
+        this.parent = parent;
         RankManager.updateRank(this);
     }
 
-    public List<Permission> getPermissions() {
+    public List<String> getPermissions() {
         return this.permissions;
     }
 
-    public void setPermissions(List<Permission> permissions) {
+    public void setPermissions(List<String> permissions) {
         this.permissions = permissions;
         RankManager.updateRank(this);
     }
 
     public void addMember(Player player) {
-        this.players.add(player);
+        this.players.add(player.getName());
+        RankManager.updateRank(this);
+    }
+
+    public void removeMember(Player player) {
+        this.players.remove(player.getName());
         RankManager.updateRank(this);
     }
 
@@ -108,7 +138,7 @@ public class Rank {
         RankManager.updateRank(this);
     }
 
-    public List<Player> getMembers() {
+    public List<String> getMembers() {
         return this.players;
     }
 
@@ -125,11 +155,11 @@ public class Rank {
             case "namecolor":
                 return this.namecolor;
             case "permissions":
-                return this.permissions;
+                return new Gson().toJson(this.permissions);
             case "members":
-                return this.players;
+                return new Gson().toJson(this.players);
             case "parents":
-                return this.parents;
+                return this.parent;
             default:
                 return null;
         }

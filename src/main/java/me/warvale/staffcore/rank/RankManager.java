@@ -1,5 +1,6 @@
 package me.warvale.staffcore.rank;
 
+import com.google.gson.Gson;
 import me.warvale.staffcore.StaffCore;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
@@ -11,6 +12,8 @@ import java.io.*;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -19,95 +22,140 @@ import java.util.logging.Level;
  */
 public class RankManager {
 
-    public static String filedir = "\\ranks\\";
     public static String filename = "ranks.json";
-    public static String path = getPath();
     public static File rankfile;
 
     private static List<Rank> ranks = new ArrayList<>();
 
-    public static void addRank(Rank rank) throws IOException, ParseException {
-        File rankFile = new File(path + filedir + "\\");
+    public static void prep() throws IOException, ParseException {
+        ranks.clear();
+        File tempfile = StaffCore.get().getDataFolder();
 
-        if (!rankFile.exists()) {
-            if (rankFile.mkdirs()) {
-                rankfile = new File(rankFile.getPath() + "\\" + filename);
-                rankfile.createNewFile();
-            }
-        }
+        boolean fileexist = true;
+        boolean successfuly = false;
+        boolean createdfile = false;
 
-        JSONObject json = (JSONObject) new JSONParser().parse(new FileReader(rankfile));
-
-        JSONArray ranks = (JSONArray) json.get("ranks");
-
-        JSONObject newrank = new JSONObject();
-        newrank.put("id", rank.getId());
-        newrank.put("name", rank.getName());
-        newrank.put("prefix", rank.getPrefix());
-        newrank.put("namecolor", rank.getNamecolor());
-        newrank.put("staff", rank.isStaff());
-        newrank.put("parents", rank.getParents());
-        newrank.put("members", rank.getMembers());
-        newrank.put("permissions", rank.getPermissions());
-
-        ranks.add(newrank);
-    }
-
-    public static void updateRank(Rank rank) {
-        File rankFile = new File(path + filedir + "\\");
-
-        if (!rankFile.exists()) {
-            if (rankFile.mkdirs()) {
-                rankfile = new File(rankFile.getPath() + "\\" + filename);
+        if (!tempfile.exists()) {
+            fileexist = false;
+            if (tempfile.mkdirs()) {
+                successfuly = true;
                 try {
-                    rankfile.createNewFile();
+                    rankfile = new File(tempfile.getPath() + "/" + filename);
+                    if (rankfile.createNewFile()) { createdfile = true; }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+        } else {
+            rankfile = new File(tempfile.getPath() + "/" + filename);
         }
 
-        JSONObject json = null;
+        for (Object obj : (JSONArray) new JSONParser().parse(new FileReader(rankfile))) {
+            JSONObject jj = (JSONObject) obj;
+            //public Rank(String name, String prefix, boolean staff, List<Rank> parents, List<Permission> permissions, String namecolor)
+
+
+            new Rank(((String) jj.get("name")).replaceAll("\\u0026", "&"),
+                    ((String) jj.get("prefix")).replaceAll("\\u0026", "&"),
+                    (boolean) jj.get("staff"),
+                    (String) jj.get("parents"),
+                    convert((JSONArray) jj.get("permissions")),
+                    (String) jj.get("namecolor"),
+                    false,
+                    convert((JSONArray) jj.get("members")));
+        }
+    }
+
+    public static void addRank(Rank rank) throws IOException, ParseException {
+        JSONArray json = (JSONArray) new JSONParser().parse(new FileReader(rankfile));
+
+        JSONObject newrank = new JSONObject();
+        newrank.put("id", rank.getId().replaceAll("\\u0026", "&"));
+        newrank.put("name", rank.getName().replaceAll("\\u0026", "&"));
+        newrank.put("prefix", rank.getPrefix().replaceAll("\\u0026", "&"));
+        newrank.put("namecolor", rank.getNamecolor().replaceAll("\\u0026", "&"));
+        newrank.put("staff", rank.isStaff());
+        newrank.put("parents", rank.getParents().replaceAll("\\u0026", "&"));
+        newrank.put("members", new Gson().toJson(rank.getMembers()).replaceAll("\\\\", "").replaceAll("\\u0026", "&"));
+        newrank.put("permissions", new Gson().toJson(rank.getPermissions()).replaceAll("\\\\", "").replaceAll("\\u0026", "&"));
+
+        json.add(newrank);
+
+
+        try (FileWriter file = new FileWriter(rankfile)) {
+            file.write(newrank.toJSONString());
+        }
+
+        ranks.add(rank);
+    }
+
+    public static void updateRank(Rank rank) {
+
+        JSONArray json = null;
         try {
-            json = (JSONObject) new JSONParser().parse(new FileReader(rankfile));
+            json = (JSONArray) new JSONParser().parse(new FileReader(rankfile));
         } catch (IOException | ParseException e) {
             StaffCore.get().getLogger().log(Level.WARNING, "Unable to update rank \"" + rank.getName() + "\"!");
         }
 
         assert json != null;
-        JSONArray ranks = (JSONArray) json.get("ranks");
-        ranks.forEach(o -> {
+        JSONArray finalJson = json;
+        json.forEach(o -> {
             JSONObject json_o = (JSONObject) o;
             if (json_o.get("id").equals(rank.getId())) {
-                json_o.forEach((o1, o2) -> {
+                ((JSONObject)(finalJson.get(finalJson.indexOf(json_o)))).forEach((o1, o2) -> {
                     String key = (String) o1;
 
-                    json_o.replace(o1, o2, rank.get(key));
+                    ((JSONObject)(finalJson.get(finalJson.indexOf(json_o)))).replace(o1, o2, rank.get(key));
                 });
             }
         });
-    }
 
+        String obj = new Gson().toJson(json.toArray());
 
-    public static String getPath() {
-        URL url = RankManager.class.getProtectionDomain().getCodeSource().getLocation();
-        String jarPath = null;
         try {
-            jarPath = URLDecoder.decode(url.getFile(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
+            try (FileWriter file = new FileWriter(rankfile)) {
+                file.write(obj);
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        assert jarPath != null;
-        return new File(jarPath).getParentFile().getPath();
     }
 
     public static Rank getRankForUser(Player player) {
         for (Rank rank : ranks) {
-            if (rank.getMembers().contains(player)) {
+            if (rank.getMembers().contains(player.getName())) {
                 return rank;
             }
         }
         return null;
+    }
+
+    public static List<Rank> getRanks() {
+        return ranks;
+    }
+
+    public static File getRankFile() {
+        return rankfile;
+    }
+
+    public static Rank getRankByName(String name) {
+        for (Rank rank : getRanks()) {
+            if (rank.getName().equalsIgnoreCase(name) || rank.getId().equalsIgnoreCase(name)) {
+                return rank;
+            }
+        }
+        return null;
+    }
+
+    public static List<String> convert(JSONArray json) {
+        List<String> list = new ArrayList<>();
+        if (json != null) {
+            for (Object aJson : json) {
+                list.add((String) aJson);
+            }
+        }
+        return list;
     }
 
 
