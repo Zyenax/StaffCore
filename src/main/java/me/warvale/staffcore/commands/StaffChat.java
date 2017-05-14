@@ -1,5 +1,7 @@
 package me.warvale.staffcore.commands;
 
+import me.warvale.staffcore.rank.Rank;
+import me.warvale.staffcore.rank.RankManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,12 +20,16 @@ public class StaffChat implements CommandExecutor {
 		if(! (sender.hasPermission("warvale.staff")))
 			sender.sendMessage(ChatColor.RED + "You don't have permission to access this!");
 		else if(args.length == 0) sender.sendMessage(ChatColor.RED + "Please include a message!");
-		else
+		else {
+			Player player = (Player) sender;
+			Rank rank = RankManager.getRankForUser(player);
+			
 			for(Player players : Bukkit.getOnlinePlayers()) {
 				if(players.hasPermission("warvale.staff"))
-					players.sendMessage(ChatColor.DARK_RED + "[STAFF] " + ChatColor.RESET + sender.getName() + ": " +
+					players.sendMessage(ChatColor.DARK_RED + "[STAFF] " + ChatColor.RESET + rank.getPrefix() + " " + rank.getNamecolor() + player.getName() + ": " +
 							                    StringUtils.join(args, ' ', 0, args.length));
 			}
+		}
 		return false;
 	}
 }

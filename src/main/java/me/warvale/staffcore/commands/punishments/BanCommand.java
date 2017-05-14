@@ -1,13 +1,17 @@
 package me.warvale.staffcore.commands.punishments;
 
+import me.warvale.staffcore.util.ServerUtils;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class BanCommand implements CommandExecutor {
 
@@ -23,8 +27,16 @@ public class BanCommand implements CommandExecutor {
             return true;
         } else {
             String reason = args.length > 1 ? StringUtils.join(args, ' ', 1, args.length) : "N/A";
-            Bukkit.getBanList(BanList.Type.NAME).addBan(args[0], ChatColor.translateAlternateColorCodes('&', "&cYou have been permanently banned from this server!\n\n&7Reason: &f" +  reason), null, sender.getName());
-
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+            Date date = null;
+            try {
+                date = formatter.parse("31-December-9999");
+            } catch(ParseException e) {
+                e.printStackTrace();
+            }
+            long mills = date.getTime();
+            ServerUtils.ban(Bukkit.getPlayer(args[0]), (Player) sender, reason, new Date(mills));
+            
             Player player = Bukkit.getPlayer(args[0]);
             if (player != null) {
                 player.kickPlayer(ChatColor.translateAlternateColorCodes('&',

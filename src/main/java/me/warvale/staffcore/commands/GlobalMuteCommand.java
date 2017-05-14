@@ -42,7 +42,7 @@ public class GlobalMuteCommand implements CommandExecutor, Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         if(isMuted() && !event.getPlayer().isOp()) {
             event.setCancelled(true);
-            event.getPlayer().sendMessage(ChatColor.RED + "Chat has been disabled by an administrator.");
+            event.getPlayer().sendMessage(ChatColor.RED + "Chat is currently disabled by an administrator.");
         }
     }
 

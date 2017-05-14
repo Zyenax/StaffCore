@@ -28,7 +28,7 @@ public class WarnCommand implements CommandExecutor {
 
             Player player = Bukkit.getPlayer(args[0]);
             if (player != null) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou have been &ewarned &cby &e" + sender.getName() + "&c for: &f" + reason + "!"));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou have been &ewarned &cby &e" + sender.getName() + "&c for &b" + reason + "!"));
             } else {
                 sender.sendMessage(ChatColor.RED + "Invalid player!");
                 return true;
