@@ -17,19 +17,21 @@ public class StaffChat implements CommandExecutor {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if(! (sender.hasPermission("warvale.staff")))
-			sender.sendMessage(ChatColor.RED + "You don't have permission to access this!");
-		else if(args.length == 0) sender.sendMessage(ChatColor.RED + "Please include a message!");
+		if(! (sender.hasPermission("warvale.staff"))) {
+			sender.sendMessage(ChatColor.RED + "You don't have permission to access this!"); return true; }
+		else if(args.length == 0) { sender.sendMessage(ChatColor.RED + "Please include a message!"); return true; }
 		else {
 			Player player = (Player) sender;
-			Rank rank = RankManager.getRankForUser(player);
+			Rank rank = RankManager.getRankForUser(player.getName());
 			
 			for(Player players : Bukkit.getOnlinePlayers()) {
-				if(players.hasPermission("warvale.staff"))
-					players.sendMessage(ChatColor.DARK_RED + "[STAFF] " + ChatColor.RESET + rank.getPrefix() + " " + rank.getNamecolor() + player.getName() + ": " +
-							                    StringUtils.join(args, ' ', 0, args.length));
+				if(players.hasPermission("warvale.staff")) {
+					assert rank != null;
+					players.sendMessage(ChatColor.DARK_RED + "[STAFF] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', rank.getPrefix() + "" + rank.getNamecolor() + player.getName() + "&7: &f" +
+							                    StringUtils.join(args, ' ', 0, args.length)));
+				}
 			}
+			return true;
 		}
-		return false;
 	}
 }

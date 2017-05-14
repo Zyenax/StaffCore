@@ -13,7 +13,7 @@ public class ChatFormatter implements Listener {
 
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onChat(AsyncPlayerChatEvent event) {
-        Rank rank = RankManager.getRankForUser(event.getPlayer());
+        Rank rank = RankManager.getRankForUser(event.getPlayer().getName());
 
         if (rank != null) {
             event.setFormat(

@@ -122,9 +122,9 @@ public class RankManager {
         }
     }
 
-    public static Rank getRankForUser(Player player) {
+    public static Rank getRankForUser(String name) {
         for (Rank rank : ranks) {
-            if (rank.getMembers().contains(player.getName())) {
+            if (rank.getMembers().contains(name)) {
                 return rank;
             }
         }
