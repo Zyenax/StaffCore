@@ -5,6 +5,7 @@ import me.warvale.staffcore.commands.TPCommand;
 import me.warvale.staffcore.rank.ChatFormatter;
 import me.warvale.staffcore.rank.RankManager;
 import me.warvale.staffcore.rank.commands.RankCommand;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.warvale.staffcore.commands.GlobalMuteCommand;
 import me.warvale.staffcore.commands.StaffChat;
@@ -23,6 +24,8 @@ public class StaffCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Bukkit.getWorld("staffmap3").setFullTime(Bukkit.getWorld("staffmap3").getFullTime() + 24000);
+        
         getCommand("alert").setExecutor(new AlertCommand());
         getCommand("s").setExecutor(new StaffChat());
         getCommand("ban").setExecutor(new BanCommand());
@@ -36,6 +39,7 @@ public class StaffCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new FilterListener(), this);
         getServer().getPluginManager().registerEvents(new GlobalMuteCommand(), this);
         getServer().getPluginManager().registerEvents(new ChatFormatter(), this);
+        getServer().getPluginManager().registerEvents(new BanCommand(), this);
 
         core = this;
 

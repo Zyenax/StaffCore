@@ -2,52 +2,75 @@ package me.warvale.staffcore.commands.punishments;
 
 import me.warvale.staffcore.util.ServerUtils;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerLoginEvent;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class BanCommand implements CommandExecutor {
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if(!sender.hasPermission("warvale.punish")) {
-            sender.sendMessage(ChatColor.RED + "You don't have permission to access this command.");
-            return true;
-        }
-
-        if(args.length < 1) {
-            sender.sendMessage(ChatColor.RED + "Not enough arguments!");
-            return true;
-        } else {
-            String reason = args.length > 1 ? StringUtils.join(args, ' ', 1, args.length) : "N/A";
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-            Date date = null;
-            try {
-                date = formatter.parse("31-December-9999");
-            } catch(ParseException e) {
-                e.printStackTrace();
-            }
-            long mills = date.getTime();
-            ServerUtils.ban(Bukkit.getPlayer(args[0]), (Player) sender, reason, new Date(mills));
-            
-            Player player = Bukkit.getPlayer(args[0]);
-            if (player != null) {
-                player.kickPlayer(ChatColor.translateAlternateColorCodes('&',
-                        "&cYou have been permanently banned from this server!\n\n&7Reason: &f" + reason));
-            }
-
-            Bukkit.broadcastMessage(" ");
-            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&',
-                    "&4[PUNISH] &b" + sender.getName() + " &7banned &b" + args[0] + " &7for &c" +reason));
-            Bukkit.broadcastMessage(" ");
-        }
-        return true;
-    }
+public class BanCommand implements CommandExecutor, Listener {
+	
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+		if(! sender.hasPermission("warvale.punish")) {
+			sender.sendMessage(ChatColor.RED + "You don't have permission to access this command.");
+			return true;
+		}
+		
+		if(args.length < 1) {
+			sender.sendMessage(ChatColor.RED + "Not enough arguments!");
+			return true;
+		} else {
+			String reason = args.length > 1 ? StringUtils.join(args, ' ', 1, args.length) : "N/A";
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+			Date date = null;
+			try {
+				date = formatter.parse("31-December-9999");
+			} catch(ParseException e) {
+				e.printStackTrace();
+			}
+			long mills = date.getTime();
+			ServerUtils.ban(Bukkit.getPlayer(args[0]), (Player) sender, reason, new Date(mills));
+			
+			Player player = Bukkit.getPlayer(args[0]);
+			if(player != null) {
+				player.kickPlayer(ChatColor.translateAlternateColorCodes('&',
+						"&cYou have been permanently banned from this server!\n\n&7Reason: &f" + reason));
+			}
+			
+			Bukkit.broadcastMessage(" ");
+			Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&',
+					"&4[PUNISH] &b" + sender.getName() + " &7banned &b" + args[0] + " &7for &c" + reason));
+			Bukkit.broadcastMessage(" ");
+		}
+		return true;
+	}
+	
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onLogin(PlayerLoginEvent event) {
+		String reason;
+		
+		if(Bukkit.getBanList(BanList.Type.NAME).isBanned(event.getPlayer().getUniqueId().toString())) {
+			Bukkit.broadcastMessage(event.getPlayer() + " tried to log in but is banned!");
+			reason = Bukkit.getBanList(BanList.Type.NAME).getBanEntry(event.getPlayer().getUniqueId().toString()).getReason();
+		} else {
+			Bukkit.broadcastMessage(event.getPlayer() + " tried to log in but is banned!");
+			reason = Bukkit.getBanList(BanList.Type.IP).getBanEntry(event.getAddress().getHostAddress()).getReason();
+		}
+		
+		if(reason != null) {
+			event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+			event.setKickMessage(reason);
+		}
+	}
 }

@@ -27,7 +27,7 @@ public class StaffChat implements CommandExecutor {
 			for(Player players : Bukkit.getOnlinePlayers()) {
 				if(players.hasPermission("warvale.staff")) {
 					assert rank != null;
-					players.sendMessage(ChatColor.DARK_RED + "[STAFF] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', rank.getPrefix() + "" + rank.getNamecolor() + player.getName() + "&7: &f" +
+					players.sendMessage(ChatColor.DARK_RED + "[STAFF] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', rank.getPrefix() + rank.getNamecolor() + player.getName() + "&7: &f" +
 							                    StringUtils.join(args, ' ', 0, args.length)));
 				}
 			}
