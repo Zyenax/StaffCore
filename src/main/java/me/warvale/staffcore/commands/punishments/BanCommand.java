@@ -2,17 +2,13 @@ package me.warvale.staffcore.commands.punishments;
 
 import me.warvale.staffcore.util.ServerUtils;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLoginEvent;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,23 +50,5 @@ public class BanCommand implements CommandExecutor, Listener {
 			Bukkit.broadcastMessage(" ");
 		}
 		return true;
-	}
-	
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void onLogin(PlayerLoginEvent event) {
-		String reason;
-		
-		if(Bukkit.getBanList(BanList.Type.NAME).isBanned(event.getPlayer().getUniqueId().toString())) {
-			Bukkit.broadcastMessage(event.getPlayer() + " tried to log in but is banned!");
-			reason = Bukkit.getBanList(BanList.Type.NAME).getBanEntry(event.getPlayer().getUniqueId().toString()).getReason();
-		} else {
-			Bukkit.broadcastMessage(event.getPlayer() + " tried to log in but is banned!");
-			reason = Bukkit.getBanList(BanList.Type.IP).getBanEntry(event.getAddress().getHostAddress()).getReason();
-		}
-		
-		if(reason != null) {
-			event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
-			event.setKickMessage(reason);
-		}
 	}
 }
