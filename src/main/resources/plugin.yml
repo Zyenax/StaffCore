@@ -14,6 +14,8 @@ commands:
     description: Global mute for whole chat.
   ip:
     description: Displays the IP of a user.
+  check:
+    description: Check a player's history.
   tp:
     description: Teleport command.
   alert:
