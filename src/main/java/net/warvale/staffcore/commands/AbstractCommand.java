@@ -1,5 +1,6 @@
 package net.warvale.staffcore.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.warvale.staffcore.StaffCore;
@@ -9,15 +10,22 @@ import org.bukkit.command.CommandSender;
 public abstract class AbstractCommand extends Parser {
     private String name, usage;
 
+    private List<SubCommand> commands = new ArrayList<>();
+
+
     /**
      * Constructor for the uhc command super class.
      *
      * @param name The name of the command.
      * @param usage the command usage (after /command)
      */
-    public AbstractCommand(String name, String usage) {
+    public AbstractCommand(String name, String usage, SubCommand... subCommands) {
         this.usage = usage;
         this.name = name;
+
+        for(SubCommand subCommand : subCommands) {
+            commands.add(subCommand);
+        }
     }
 
     protected StaffCore plugin;
@@ -90,5 +98,9 @@ public abstract class AbstractCommand extends Parser {
      */
     public String booleanToString(boolean converting) {
         return converting ? "enabled" : "disabled";
+    }
+
+    public List<SubCommand> getCommands() {
+        return commands;
     }
 }

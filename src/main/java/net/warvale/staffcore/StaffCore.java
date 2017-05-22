@@ -3,7 +3,11 @@ package net.warvale.staffcore;
 import net.warvale.staffcore.commands.*;
 import net.warvale.staffcore.commands.punishments.BanCommand;
 import net.warvale.staffcore.commands.punishments.KickCommand;
+import net.warvale.staffcore.config.ConfigManager;
+import net.warvale.staffcore.listeners.ChatListener;
 import net.warvale.staffcore.listeners.FilterListener;
+import net.warvale.staffcore.listeners.SessionListener;
+import net.warvale.staffcore.message.MessageManager;
 import net.warvale.staffcore.utils.files.PropertiesFile;
 import net.warvale.staffcore.utils.sql.SQLConnection;
 import org.bukkit.Bukkit;
@@ -27,28 +31,27 @@ public class StaffCore extends JavaPlugin {
     private PropertiesFile propertiesFile;
     private static SQLConnection db;
 
+    //command handler
+    private static CommandHandler cmds;
+
     @Override
     public void onEnable() {
         core = this;
         Bukkit.getWorld("staffmap3").setFullTime(Bukkit.getWorld("staffmap3").getFullTime() + 24000);
-        
-        getCommand("alert").setExecutor(new AlertCommand());
-        getCommand("s").setExecutor(new StaffChat());
-        getCommand("ban").setExecutor(new BanCommand(this));
-        getCommand("kick").setExecutor(new KickCommand());
-        getCommand("gmute").setExecutor(new GlobalMuteCommand());
-        //getCommand("warn").setExecutor(new WarnCommand());
-        getCommand("ip").setExecutor(new IPCommand());
-        getCommand("tp").setExecutor(new TPCommand());
-        //getCommand("check").setExecutor(new CheckCommand(this));
+
+        ConfigManager.getInstance().setup();
+        MessageManager.getInstance().setup();
 
         getServer().getPluginManager().registerEvents(new FilterListener(), this);
-        getServer().getPluginManager().registerEvents(new GlobalMuteCommand(), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        getServer().getPluginManager().registerEvents(new SessionListener(this), this);
 
-        //getServer().getPluginManager().registerEvents(new SessionListener(this), this);
+        cmds = new CommandHandler(this);
+        cmds.registerCommands();
 
+        getCommand("ban").setExecutor(new BanCommand(this));
+        getCommand("kick").setExecutor(new KickCommand());
 
-        //public Rank(String name, String prefix, boolean staff, List<Rank> parents, List<Permission> permissions, String namecolor) throws IOException, ParseException
     }
 
     @Override
@@ -133,5 +136,9 @@ public class StaffCore extends JavaPlugin {
 
     private void stop() {
         Bukkit.getServer().shutdown();
+    }
+
+    public static void doAsync(Runnable runnable) {
+        Bukkit.getServer().getScheduler().runTaskAsynchronously(get(), runnable);
     }
 }

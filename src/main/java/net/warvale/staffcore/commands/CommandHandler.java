@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.warvale.staffcore.StaffCore;
+import net.warvale.staffcore.commands.admin.RankCommand;
 import net.warvale.staffcore.commands.basic.AlertCommand;
 import net.warvale.staffcore.commands.basic.TPCommand;
 import net.warvale.staffcore.commands.chat.GlobalMuteCommand;
@@ -119,7 +120,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     public void registerCommands() {
 
         //admin
-
+        cmds.add(new RankCommand());
 
         // basic
         cmds.add(new AlertCommand());

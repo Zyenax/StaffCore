@@ -129,3 +129,5 @@ hs_err_pid*
 StaffCore\.iml
 
 \.idea/
+
+dependency-reduced-pom\.xml
