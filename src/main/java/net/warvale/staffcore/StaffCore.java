@@ -8,6 +8,7 @@ import net.warvale.staffcore.listeners.ChatListener;
 import net.warvale.staffcore.listeners.FilterListener;
 import net.warvale.staffcore.listeners.SessionListener;
 import net.warvale.staffcore.message.MessageManager;
+import net.warvale.staffcore.rank.RankManager;
 import net.warvale.staffcore.utils.files.PropertiesFile;
 import net.warvale.staffcore.utils.sql.SQLConnection;
 import org.bukkit.Bukkit;
@@ -41,6 +42,8 @@ public class StaffCore extends JavaPlugin {
 
         ConfigManager.getInstance().setup();
         MessageManager.getInstance().setup();
+
+        RankManager.loadRanks();
 
         getServer().getPluginManager().registerEvents(new FilterListener(), this);
         getServer().getPluginManager().registerEvents(new ChatListener(), this);

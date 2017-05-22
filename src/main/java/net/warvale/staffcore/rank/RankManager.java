@@ -112,7 +112,7 @@ public class RankManager {
 
     }
 
-    public void loadRanks() {
+    public static void loadRanks() {
         try {
             List<String> downloadedNames = new ArrayList<>();
             PreparedStatement stmt = StaffCore.getDB().getConnection().prepareStatement("SELECT name FROM ranks;");
