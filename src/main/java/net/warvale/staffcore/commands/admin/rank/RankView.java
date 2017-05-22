@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class RankView extends SubCommand {
 
     public RankView(AbstractCommand command) {
-        super("view", command, "Shows group information", "<User>");
+        super("view", command, "Shows group information", "<Rank>");
     }
 
     // Outposts information about a group

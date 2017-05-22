@@ -2,6 +2,8 @@ package net.warvale.staffcore.listeners;
 
 import net.warvale.staffcore.message.MessageManager;
 import net.warvale.staffcore.message.PrefixType;
+import net.warvale.staffcore.users.User;
+import net.warvale.staffcore.users.UserManager;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,6 +28,11 @@ public class ChatListener implements Listener {
             event.setCancelled(true);
             event.getPlayer().sendMessage(ChatColor.RED + "Chat is currently disabled.");
         }
+
+        User user = UserManager.getUser(event.getPlayer());
+
+        event.setFormat(user.getPrefix() + ChatColor.RESET + " " +
+                ChatColor.BLUE + user.getName() + ChatColor.RESET + ": " + event.getMessage());
     }
 
     public boolean isMuted() {
