@@ -1,5 +1,6 @@
 package net.warvale.staffcore.rank;
 
+import net.md_5.bungee.api.ChatColor;
 import net.warvale.staffcore.permissions.Privilege;
 import net.warvale.staffcore.users.User;
 import net.warvale.staffcore.users.UserManager;
@@ -141,7 +142,7 @@ public class Rank implements Comparable {
     }
 
     public String getMetaPrefix() {
-        return metaPrefix;
+        return ChatColor.translateAlternateColorCodes('&', metaPrefix);
     }
 
     public void setMetaPrefix(String metaPrefix) {
@@ -149,7 +150,7 @@ public class Rank implements Comparable {
     }
 
     public String getMetaSuffix() {
-        return metaSuffix;
+        return ChatColor.translateAlternateColorCodes('&', metaSuffix);
     }
 
     public void setMetaSuffix(String metaSuffix) {
