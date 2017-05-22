@@ -2,7 +2,6 @@ package net.warvale.staffcore.commands.admin;
 
 import net.warvale.staffcore.commands.AbstractCommand;
 import net.warvale.staffcore.commands.SubCommand;
-import net.warvale.staffcore.commands.admin.user.*;
 import net.warvale.staffcore.exceptions.CommandException;
 import net.warvale.staffcore.message.MessageManager;
 import net.warvale.staffcore.message.PrefixType;
@@ -24,6 +23,41 @@ public class UserCommand extends AbstractCommand {
 
         if (!(sender instanceof Player)) {
             throw new CommandException("Only players can execute this command.");
+        }
+
+        if (args.length == 0) {
+            if (getCommands().size() > 0) {
+                sender.sendMessage(MessageManager.getPrefix(PrefixType.PERMS) + "§a " + getName() + " Commands");
+                for (SubCommand sc : getCommands()) {
+                    sender.sendMessage("§b§l-> §b" + sc.getUsage());
+                }
+            } else {
+                sender.sendMessage(MessageManager.getPrefix(PrefixType.PERMS) + "§c No register commands for provided scope.");
+            }
+        } else {
+
+            // Match the second argument to a subcommand
+            SubCommand subCmd = null;
+            for (SubCommand sc : getCommands()) {
+                if (sc.getName().equalsIgnoreCase(args[0])) {
+                    subCmd = sc;
+                    break;
+                }
+            }
+
+            // Check if the command exists
+            if (subCmd != null) {
+
+                // Pass on any remaining arguments and execute the subcommand
+                List<String> a = new ArrayList<>();
+                a.addAll(Arrays.asList(args).subList(1, args.length));
+
+                subCmd.run(sender, a);
+
+            } else {
+                sender.sendMessage("§c§l[WarvalePerms] §cUnrecognized command. Try \"/ " + getName() + "\"?");
+            }
+
         }
 
         return true;
