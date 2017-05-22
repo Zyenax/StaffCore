@@ -185,4 +185,15 @@ public class RankManager {
         }
 
     }
+
+    public static void deleteRank(Rank rank) {
+        try {
+            PreparedStatement stmt = StaffCore.getDB().getConnection().prepareStatement("DELETE FROM ranks WHERE name = ?;");
+            stmt.setString(1, rank.getName());
+            stmt.execute();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
