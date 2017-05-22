@@ -2,4 +2,4 @@ prefix:
   main: "&8[&4Warvale&8]"
   alert: "&4[WARVALE ALERT]"
   staff: "&4[STAFF]"
-  staff: "&8[&4WarvalePerms&8]"
+  perms: "&8[&4WarvalePerms&8]"
