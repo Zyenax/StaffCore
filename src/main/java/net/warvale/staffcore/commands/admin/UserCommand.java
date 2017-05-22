@@ -2,6 +2,7 @@ package net.warvale.staffcore.commands.admin;
 
 import net.warvale.staffcore.commands.AbstractCommand;
 import net.warvale.staffcore.commands.SubCommand;
+import net.warvale.staffcore.commands.admin.user.*;
 import net.warvale.staffcore.exceptions.CommandException;
 import net.warvale.staffcore.message.MessageManager;
 import net.warvale.staffcore.message.PrefixType;
@@ -16,14 +17,23 @@ public class UserCommand extends AbstractCommand {
 
     public UserCommand() {
         super("user", "");
+
+        getCommands().add(new UserAddRank(this));
+        getCommands().add(new UserBukkitCheck(this));
+        getCommands().add(new UserPrefix(this));
+        getCommands().add(new UserRemoveRank(this));
+        getCommands().add(new UserSet(this));
+        getCommands().add(new UserSetRank(this));
+        getCommands().add(new UserSuffix(this));
+        getCommands().add(new UserSuper(this));
+        getCommands().add(new UserUnset(this));
+        getCommands().add(new UserView(this));
+        getCommands().add(new UserWorld(this));
+
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) throws CommandException {
-
-        if (!(sender instanceof Player)) {
-            throw new CommandException("Only players can execute this command.");
-        }
 
         if (args.length == 0) {
             if (getCommands().size() > 0) {

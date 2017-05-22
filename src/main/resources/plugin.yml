@@ -22,6 +22,8 @@ commands:
     description: Broadcast a message to the server.
   rank:
     description: Manages the ranks.
+  user:
+   description: Manage users.
 
 permissions:
   warvale.*:

@@ -51,6 +51,15 @@ public class UserManager {
         return getSQLUser(uuid);
     }
 
+    public static User getUser(String name) {
+        for (User user : getUsers()) {
+            if (user.getName().equals(name)) {
+                return user;
+            }
+        }
+        return getSQLUser(name);
+    }
+
 
     public static User getSQLUser(UUID uuid) {
         try {
@@ -60,6 +69,60 @@ public class UserManager {
             if (set.next()) {
 
                 String name = set.getString("name");
+                String json = set.getString("data");
+
+                JSONParser parser = new JSONParser();
+
+                Object obj = parser.parse(json);
+                JSONObject data = (JSONObject) obj;
+
+                String prefix = (String) data.get("prefix");
+                String suffix = (String) data.get("suffix");
+                boolean superUser = (boolean) data.get("super");
+
+                JSONArray privileges = (JSONArray) data.get("privileges");
+                JSONArray ranks = (JSONArray) data.get("ranks");
+
+                User user = new User(uuid);
+
+                if (user.getPlayer() == null) {
+                    user.setName(name);
+                } else {
+                    user.setName(user.getPlayer().getName());
+                }
+
+                user.setMetaPrefix(prefix);
+                user.setMetaSuffix(suffix);
+                user.setSuperUser(superUser);
+
+                for (Object priv : privileges) {
+                    user.getPrivileges().add(new Privilege(((String) priv).split(":")));
+                }
+
+                for (Object r : ranks) {
+                    Rank rank = RankManager.getRank((String) r);
+                    if (rank != null) {
+                        user.getRanks().add(rank);
+                    }
+                }
+
+                return user;
+
+            }
+        } catch (SQLException | ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static User getSQLUser(String name) {
+        try {
+            PreparedStatement stmt = StaffCore.getDB().getConnection().prepareStatement("SELECT * FROM users WHERE name = ? LIMIT 1;");
+            stmt.setString(1, name);
+            ResultSet set = stmt.executeQuery();
+            if (set.next()) {
+
+                UUID uuid = UUID.fromString(set.getString("uuid"));
                 String json = set.getString("data");
 
                 JSONParser parser = new JSONParser();
