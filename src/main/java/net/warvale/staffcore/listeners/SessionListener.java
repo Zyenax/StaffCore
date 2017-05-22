@@ -38,6 +38,7 @@ public class SessionListener implements Listener {
 
 		if (user == null) {
 			user = new User(event.getUniqueId());
+			user.setName(event.getName());
 			UserManager.saveUser(user);
 			StaffCore.get().getLogger().log(Level.INFO, "Created New User: " + user.getName() + " (" + user.getUuid() + ")");
 		}

@@ -1,7 +1,7 @@
 name: StaffCore
 main: net.warvale.staffcore.StaffCore
 version: 1.0.0
-authors: Warvale
+author: Warvale
 commands:
   ban:
     description: Ban command.
