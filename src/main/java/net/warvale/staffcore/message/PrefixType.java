@@ -4,5 +4,6 @@ public enum PrefixType {
 
     MAIN,
     ALERT,
+    STAFF,
 
 }

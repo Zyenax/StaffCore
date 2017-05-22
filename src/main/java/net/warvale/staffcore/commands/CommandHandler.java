@@ -5,6 +5,10 @@ import java.util.List;
 
 import net.warvale.staffcore.StaffCore;
 import net.warvale.staffcore.commands.basic.AlertCommand;
+import net.warvale.staffcore.commands.basic.TPCommand;
+import net.warvale.staffcore.commands.chat.GlobalMuteCommand;
+import net.warvale.staffcore.commands.staff.IPCommand;
+import net.warvale.staffcore.commands.staff.StaffChatCommand;
 import net.warvale.staffcore.exceptions.CommandException;
 import net.warvale.staffcore.message.MessageManager;
 import net.warvale.staffcore.message.PrefixType;
@@ -119,14 +123,16 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
         // basic
         cmds.add(new AlertCommand());
+        cmds.add(new TPCommand());
 
         //chat
+        cmds.add(new GlobalMuteCommand());
 
+        //punish
 
-        //game
-
-        //team
-
+        //staff
+        cmds.add(new IPCommand());
+        cmds.add(new StaffChatCommand());
 
         for (AbstractCommand cmd : cmds) {
             PluginCommand pCmd = plugin.getCommand(cmd.getName());
