@@ -142,7 +142,7 @@ public class Rank implements Comparable {
     }
 
     public String getMetaPrefix() {
-        return ChatColor.translateAlternateColorCodes('&', metaPrefix);
+        return metaPrefix;
     }
 
     public void setMetaPrefix(String metaPrefix) {
@@ -150,7 +150,7 @@ public class Rank implements Comparable {
     }
 
     public String getMetaSuffix() {
-        return ChatColor.translateAlternateColorCodes('&', metaSuffix);
+        return  metaSuffix;
     }
 
     public void setMetaSuffix(String metaSuffix) {
