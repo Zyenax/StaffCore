@@ -1,4 +1,4 @@
-package me.warvale.staffcore.commands;
+package net.warvale.staffcore.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -1,4 +1,4 @@
-package me.warvale.staffcore.util;
+package net.warvale.staffcore.utils;
 
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;

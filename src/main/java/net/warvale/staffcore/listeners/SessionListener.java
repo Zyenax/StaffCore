@@ -1,7 +1,7 @@
-package me.warvale.staffcore.listeners;
+package net.warvale.staffcore.listeners;
 
-import me.warvale.staffcore.StaffCore;
-import me.warvale.staffcore.util.PlayerManager;
+import net.warvale.staffcore.StaffCore;
+import net.warvale.staffcore.utils.PlayerManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;

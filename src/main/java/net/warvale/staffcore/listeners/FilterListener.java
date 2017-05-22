@@ -1,4 +1,4 @@
-package me.warvale.staffcore.listeners;
+package net.warvale.staffcore.listeners;
 
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;

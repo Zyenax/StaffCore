@@ -1,4 +1,4 @@
-package me.warvale.staffcore.commands.punishments;
+package net.warvale.staffcore.commands.punishments;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;

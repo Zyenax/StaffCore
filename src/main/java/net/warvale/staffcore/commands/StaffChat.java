@@ -1,7 +1,7 @@
-package me.warvale.staffcore.commands;
+package net.warvale.staffcore.commands;
 
-import me.warvale.staffcore.rank.Rank;
-import me.warvale.staffcore.rank.RankManager;
+import net.warvale.staffcore.rank.Rank;
+import net.warvale.staffcore.rank.RankManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

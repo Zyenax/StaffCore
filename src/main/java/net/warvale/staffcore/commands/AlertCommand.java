@@ -1,4 +1,4 @@
-package me.warvale.staffcore.commands;
+package net.warvale.staffcore.commands;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;

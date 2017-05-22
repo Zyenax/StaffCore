@@ -1,16 +1,10 @@
-package me.warvale.staffcore.rank;
+package net.warvale.staffcore.rank;
 
 import com.google.gson.Gson;
 import org.bukkit.entity.Player;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.List;
 

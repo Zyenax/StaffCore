@@ -1,19 +1,14 @@
-package me.warvale.staffcore.rank;
+package net.warvale.staffcore.rank;
 
 import com.google.gson.Gson;
-import me.warvale.staffcore.StaffCore;
-import org.bukkit.entity.Player;
+import net.warvale.staffcore.StaffCore;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
-import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 

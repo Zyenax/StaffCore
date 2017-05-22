@@ -1,4 +1,4 @@
-package me.warvale.staffcore.rank;
+package net.warvale.staffcore.rank;
 
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;

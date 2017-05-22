@@ -1,6 +1,6 @@
-package me.warvale.staffcore.commands.punishments;
+package net.warvale.staffcore.commands.punishments;
 
-import me.warvale.staffcore.StaffCore;
+import net.warvale.staffcore.StaffCore;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;

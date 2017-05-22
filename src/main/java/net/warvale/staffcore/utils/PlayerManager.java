@@ -1,6 +1,6 @@
-package me.warvale.staffcore.util;
+package net.warvale.staffcore.utils;
 
-import me.warvale.staffcore.StaffCore;
+import net.warvale.staffcore.StaffCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;

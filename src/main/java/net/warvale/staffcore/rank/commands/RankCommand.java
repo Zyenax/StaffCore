@@ -1,14 +1,10 @@
-package me.warvale.staffcore.rank.commands;
+package net.warvale.staffcore.rank.commands;
 
-import me.warvale.staffcore.rank.Rank;
-import me.warvale.staffcore.rank.RankManager;
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
+import net.warvale.staffcore.rank.RankManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;

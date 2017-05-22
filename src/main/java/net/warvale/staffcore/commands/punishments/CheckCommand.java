@@ -1,7 +1,7 @@
-package me.warvale.staffcore.commands.punishments;
+package net.warvale.staffcore.commands.punishments;
 
-import me.warvale.staffcore.StaffCore;
-import me.warvale.staffcore.util.PlayerManager;
+import net.warvale.staffcore.StaffCore;
+import net.warvale.staffcore.utils.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
