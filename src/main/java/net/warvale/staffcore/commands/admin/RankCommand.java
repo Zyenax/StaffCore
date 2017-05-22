@@ -2,7 +2,7 @@ package net.warvale.staffcore.commands.admin;
 
 import net.warvale.staffcore.commands.AbstractCommand;
 import net.warvale.staffcore.commands.SubCommand;
-import net.warvale.staffcore.commands.admin.rank.RankCreate;
+import net.warvale.staffcore.commands.admin.rank.*;
 import net.warvale.staffcore.exceptions.CommandException;
 import net.warvale.staffcore.message.MessageManager;
 import net.warvale.staffcore.message.PrefixType;
@@ -20,7 +20,16 @@ public class RankCommand extends AbstractCommand {
 
         //register subcommands
         getCommands().add(new RankCreate(this));
-
+        getCommands().add(new RankDelete(this));
+        getCommands().add(new RankInherit(this));
+        getCommands().add(new RankList(this));
+        getCommands().add(new RankPrefix(this));
+        getCommands().add(new RankPriority(this));
+        getCommands().add(new RankSet(this));
+        getCommands().add(new RankSuffix(this));
+        getCommands().add(new RankUnset(this));
+        getCommands().add(new RankView(this));
+        getCommands().add(new RankWorld(this));
     }
 
     @Override
@@ -37,7 +46,7 @@ public class RankCommand extends AbstractCommand {
                     sender.sendMessage("§b§l-> §b" + sc.getUsage());
                 }
             } else {
-                sender.sendMessage("§c§l[WarvalePerms]§c No register commands for provided scope.");
+                sender.sendMessage(MessageManager.getPrefix(PrefixType.PERMS) + "§c No register commands for provided scope.");
             }
         } else {
 

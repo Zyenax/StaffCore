@@ -4,6 +4,8 @@ import net.warvale.staffcore.StaffCore;
 import net.warvale.staffcore.commands.AbstractCommand;
 import net.warvale.staffcore.commands.SubCommand;
 import net.warvale.staffcore.exceptions.InsufficientArgumentException;
+import net.warvale.staffcore.message.MessageManager;
+import net.warvale.staffcore.message.PrefixType;
 import net.warvale.staffcore.rank.*;
 import org.bukkit.command.CommandSender;
 
@@ -37,9 +39,9 @@ public class RankCreate extends SubCommand {
                 rank = new Rank(args.get(0).replace("_", " "), priority);
                 RankManager.getRanks().add(rank);
 
-                sender.sendMessage("§a§l[WarvalePerms] §aCreated the §n" + rank.getName() + "§a rank.");
+                sender.sendMessage(MessageManager.getPrefix(PrefixType.PERMS) + "§aCreated the §n" + rank.getName() + "§a rank.");
                 if (RankManager.getDefaultRank() != null && RankManager.getDefaultRank().getName().equals(rank.getName())) {
-                    sender.sendMessage("§a§l[WarvalePerms] §a§n" + rank.getName() + "§a is your new default group.");
+                    sender.sendMessage(MessageManager.getPrefix(PrefixType.PERMS) + "§a§n" + rank.getName() + "§a is your new default rank.");
                 }
 
                 // Saves the new group
@@ -47,7 +49,7 @@ public class RankCreate extends SubCommand {
                 StaffCore.doAsync(() -> RankManager.saveRank(finalRank));
 
             } else {
-                sender.sendMessage("§c§l[WarvalePerms] §cGroup already exists: \"" + args.get(0) + "\"");
+                sender.sendMessage(MessageManager.getPrefix(PrefixType.PERMS) + "§cRank already exists: \"" + args.get(0) + "\"");
             }
 
         } else {
