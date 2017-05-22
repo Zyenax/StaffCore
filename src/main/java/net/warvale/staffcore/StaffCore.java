@@ -4,9 +4,6 @@ import net.warvale.staffcore.commands.*;
 import net.warvale.staffcore.commands.punishments.BanCommand;
 import net.warvale.staffcore.commands.punishments.KickCommand;
 import net.warvale.staffcore.listeners.FilterListener;
-import net.warvale.staffcore.rank.ChatFormatter;
-import net.warvale.staffcore.rank.RankManager;
-import net.warvale.staffcore.rank.commands.RankCommand;
 import net.warvale.staffcore.utils.files.PropertiesFile;
 import net.warvale.staffcore.utils.sql.SQLConnection;
 import org.bukkit.Bukkit;
@@ -43,12 +40,11 @@ public class StaffCore extends JavaPlugin {
         //getCommand("warn").setExecutor(new WarnCommand());
         getCommand("ip").setExecutor(new IPCommand());
         getCommand("tp").setExecutor(new TPCommand());
-        getCommand("rank").setExecutor(new RankCommand());
         //getCommand("check").setExecutor(new CheckCommand(this));
 
         getServer().getPluginManager().registerEvents(new FilterListener(), this);
         getServer().getPluginManager().registerEvents(new GlobalMuteCommand(), this);
-        getServer().getPluginManager().registerEvents(new ChatFormatter(), this);
+
         //getServer().getPluginManager().registerEvents(new SessionListener(this), this);
 
 

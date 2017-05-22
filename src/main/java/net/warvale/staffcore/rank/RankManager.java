@@ -1,125 +1,53 @@
 package net.warvale.staffcore.rank;
 
-import com.google.gson.Gson;
 import net.warvale.staffcore.StaffCore;
+import net.warvale.staffcore.permissions.Privilege;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
+import java.util.stream.Collectors;
 
-/**
- * Created by Draem on 5/10/2017.
- */
 public class RankManager {
 
-    public static String filename = "ranks.json";
-    public static File rankfile;
-
+    // A list of all ranks
     private static List<Rank> ranks = new ArrayList<>();
 
-    public static void prep() throws IOException, ParseException {
-        ranks.clear();
-        File tempfile = StaffCore.get().getDataFolder();
-
-        boolean fileexist = true;
-        boolean successfuly = false;
-        boolean createdfile = false;
-
-        if (!tempfile.exists()) {
-            fileexist = false;
-            if (tempfile.mkdirs()) {
-                successfuly = true;
-                try {
-                    rankfile = new File(tempfile.getPath() + "/" + filename);
-                    if (rankfile.createNewFile()) { createdfile = true; }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+    // Returns the default rank, defined by the group with the lowest priority
+    public static Rank getDefaultRank() {
+        Rank rank = null;
+        for (Rank r : getRanks()) {
+            if (rank == null || rank.getPriority() > r.getPriority()) {
+                rank = r;
             }
-        } else {
-            rankfile = new File(tempfile.getPath() + "/" + filename);
         }
-
-        for (Object obj : (JSONArray) new JSONParser().parse(new FileReader(rankfile))) {
-            JSONObject jj = (JSONObject) obj;
-            //public Rank(String name, String prefix, boolean staff, List<Rank> parents, List<Permission> permissions, String namecolor)
-
-
-            new Rank(((String) jj.get("name")).replaceAll("\\u0026", "&"),
-                    ((String) jj.get("prefix")).replaceAll("\\u0026", "&"),
-                    (boolean) jj.get("staff"),
-                    (String) jj.get("parents"),
-                    convert((JSONArray) jj.get("permissions")),
-                    (String) jj.get("namecolor"),
-                    false,
-                    convert((JSONArray) jj.get("members")));
-        }
+        return rank;
     }
 
-    public static void addRank(Rank rank) throws IOException, ParseException {
-        JSONArray json = (JSONArray) new JSONParser().parse(new FileReader(rankfile));
-
-        JSONObject newrank = new JSONObject();
-        newrank.put("id", rank.getId().replaceAll("\\u0026", "&"));
-        newrank.put("name", rank.getName().replaceAll("\\u0026", "&"));
-        newrank.put("prefix", rank.getPrefix().replaceAll("\\u0026", "&"));
-        newrank.put("namecolor", rank.getNamecolor().replaceAll("\\u0026", "&"));
-        newrank.put("staff", rank.isStaff());
-        newrank.put("parents", rank.getParents().replaceAll("\\u0026", "&"));
-        newrank.put("members", new Gson().toJson(rank.getMembers()).replaceAll("\\\\", "").replaceAll("\\u0026", "&"));
-        newrank.put("permissions", new Gson().toJson(rank.getPermissions()).replaceAll("\\\\", "").replaceAll("\\u0026", "&"));
-
-        json.add(newrank);
-
-
-        try (FileWriter file = new FileWriter(rankfile)) {
-            file.write(newrank.toJSONString());
+    // If world is not null
+    public static List<Rank> getRanks(World world) {
+        List<Rank> ranks = new ArrayList<>();
+        for (Rank rank : getRanks()) {
+            if (rank.isSupportingWorld(world)) {
+                ranks.add(rank);
+            }
         }
-
-        ranks.add(rank);
+        return ranks;
     }
 
-    public static void updateRank(Rank rank) {
-
-        JSONArray json = null;
-        try {
-            json = (JSONArray) new JSONParser().parse(new FileReader(rankfile));
-        } catch (IOException | ParseException e) {
-            StaffCore.get().getLogger().log(Level.WARNING, "Unable to update rank \"" + rank.getName() + "\"!");
-        }
-
-        assert json != null;
-        JSONArray finalJson = json;
-        json.forEach(o -> {
-            JSONObject json_o = (JSONObject) o;
-            if (json_o.get("id").equals(rank.getId())) {
-                ((JSONObject)(finalJson.get(finalJson.indexOf(json_o)))).forEach((o1, o2) -> {
-                    String key = (String) o1;
-
-                    ((JSONObject)(finalJson.get(finalJson.indexOf(json_o)))).replace(o1, o2, rank.get(key));
-                });
-            }
-        });
-
-        String obj = new Gson().toJson(json.toArray());
-
-        try {
-            try (FileWriter file = new FileWriter(rankfile)) {
-                file.write(obj);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static Rank getRankForUser(String name) {
-        for (Rank rank : ranks) {
-            if (rank.getMembers().contains(name)) {
+    // Returns a group that matches the provided name
+    public static Rank getRank(String name) {
+        name = name.replace("_", " ");
+        for (Rank rank : getRanks()) {
+            if (rank.getName().equalsIgnoreCase(name)) {
                 return rank;
             }
         }
@@ -130,29 +58,131 @@ public class RankManager {
         return ranks;
     }
 
-    public static File getRankFile() {
-        return rankfile;
-    }
+    public static void saveRank(Rank rank) {
 
-    public static Rank getRankByName(String name) {
-        for (Rank rank : getRanks()) {
-            if (rank.getName().equalsIgnoreCase(name) || rank.getId().equalsIgnoreCase(name)) {
-                return rank;
+        try {
+
+            if (!StaffCore.getDB().checkConnection()) {
+                return;
             }
-        }
-        return null;
-    }
 
-    public static List<String> convert(JSONArray json) {
-        List<String> list = new ArrayList<>();
-        if (json != null) {
-            for (Object aJson : json) {
-                list.add((String) aJson);
+        } catch (Exception ex) {}
+
+        JSONObject obj = new JSONObject();
+        obj.put("priority", rank.getPriority());
+
+        JSONArray privileges = rank.getPrivileges().stream().map(Privilege::toString).collect(Collectors.toCollection(JSONArray::new));
+        JSONArray inherit = rank.getInheritance().stream().map(Rank::getName).collect(Collectors.toCollection(JSONArray::new));
+        JSONArray worlds = rank.getWorlds().stream().map(World::getName).collect(Collectors.toCollection(JSONArray::new));
+
+        obj.put("privileges", privileges);
+        obj.put("inherit", inherit);
+        obj.put("worlds", worlds);
+
+        obj.put("prefix", rank.getMetaPrefix());
+        obj.put("suffix", rank.getMetaSuffix());
+
+        String json = obj.toJSONString();
+
+        try {
+            PreparedStatement stmt = StaffCore.getDB().getConnection().prepareStatement("SELECT * FROM ranks WHERE name = ? LIMIT 1;");
+            stmt.setString(1, rank.getName());
+            ResultSet set = stmt.executeQuery();
+            if (set.next()) {
+                stmt.close();
+
+                stmt = StaffCore.getDB().getConnection().prepareStatement("UPDATE ranks SET data = ? WHERE name = ?;");
+                stmt.setString(1, json);
+                stmt.setString(2, rank.getName());
+                stmt.execute();
+                stmt.close();
+
+            } else {
+                stmt.close();
+                stmt = StaffCore.getDB().getConnection().prepareStatement("INSERT INTO ranks (name, data) VALUES (?, ?);");
+                stmt.setString(1, rank.getName());
+                stmt.setString(2, json);
+                stmt.execute();
+                stmt.close();
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return list;
+
+
     }
 
+    public void loadRanks() {
+        try {
+            List<String> downloadedNames = new ArrayList<>();
+            PreparedStatement stmt = StaffCore.getDB().getConnection().prepareStatement("SELECT name FROM ranks;");
+            ResultSet set = stmt.executeQuery();
+            while (set.next()) {
+                String name = set.getString("name");
+                downloadedNames.add(name);
+                if (RankManager.getRank(name) == null) {
+                    RankManager.getRanks().add(new Rank(name, 0));
+                }
+            }
+            set.close();
+            stmt.close();
+            if (downloadedNames.size() > 0) {
+                for (int i = 0; i < RankManager.getRanks().size(); i++) {
+                    Rank rank = RankManager.getRanks().get(i);
+                    if (!downloadedNames.contains(rank.getName())) {
+                        rank.delete();
+                        RankManager.getRanks().remove(rank); // Group was deleted
+                    }
+                }
+            }
+            for (Rank rank : RankManager.getRanks()) {
+                stmt = StaffCore.getDB().getConnection().prepareStatement("SELECT * FROM ranks WHERE name = ? LIMIT 1;");
+                stmt.setString(1, rank.getName());
+                set = stmt.executeQuery();
+                if (set.next()) {
 
+                    String json = set.getString("data");
+                    JSONParser parser = new JSONParser();
 
+                    Object obj = parser.parse(json);
+                    JSONObject data = (JSONObject) obj;
+
+                    rank.setPriority(Integer.valueOf(data.get("priority").toString()));
+
+                    rank.getPrivileges().clear();
+
+                    for (Object p : (JSONArray) data.get("privileges")) {
+                        rank.getPrivileges().add(new Privilege(((String) p).split(":")));
+                    }
+
+                    rank.getInheritance().clear();
+
+                    for (Object i : (JSONArray) data.get("inherit")) {
+                        Rank ih = RankManager.getRank((String) i);
+                        if (ih != null) {
+                            rank.getInheritance().add(ih);
+                        }
+                    }
+
+                    rank.getWorlds().clear();
+
+                    for (Object w : (JSONArray) data.get("worlds")) {
+                        World world = Bukkit.getWorld((String) w);
+                        if (world != null) {
+                            rank.getWorlds().add(world);
+                        }
+                    }
+
+                    rank.setMetaPrefix((String) data.get("prefix"));
+                    rank.setMetaSuffix((String) data.get("suffix"));
+
+                }
+                set.close();
+                stmt.close();
+            }
+        } catch (SQLException | ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
