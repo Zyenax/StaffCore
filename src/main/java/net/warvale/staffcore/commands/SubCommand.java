@@ -101,7 +101,7 @@ public abstract class SubCommand {
     }
 
     public String getUsage() {
-        return "/" + masterCommand.getName() + " " + getName() + usage;
+        return "/" + masterCommand.getName() + " " + getName() + " " + usage;
     }
 
     public String getPermission() {

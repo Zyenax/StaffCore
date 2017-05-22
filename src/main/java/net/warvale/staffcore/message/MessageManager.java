@@ -27,6 +27,7 @@ public class MessageManager {
         prefix.put(PrefixType.MAIN, ChatColor.translateAlternateColorCodes('&', f.getString("prefix.main")));
         prefix.put(PrefixType.ALERT, ChatColor.translateAlternateColorCodes('&', f.getString("prefix.alert")));
         prefix.put(PrefixType.STAFF, ChatColor.translateAlternateColorCodes('&', f.getString("prefix.staff")));
+        prefix.put(PrefixType.PERMS, ChatColor.translateAlternateColorCodes('&', f.getString("prefix.perms")));
     }
 
     /**

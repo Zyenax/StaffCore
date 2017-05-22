@@ -32,9 +32,9 @@ public class RankCommand extends AbstractCommand {
 
         if (args.length == 0) {
             if (getCommands().size() > 0) {
-                sender.sendMessage("§a§l[WarvalePerms]§a " + getName() + " Commands");
+                sender.sendMessage(MessageManager.getPrefix(PrefixType.PERMS) + "§a " + getName() + " Commands");
                 for (SubCommand sc : getCommands()) {
-                    sender.sendMessage("§b§l-> §b/" + getName() + " " + sc.getName() + " " + (sc.getUsage() != null ? sc.getUsage() : ""));
+                    sender.sendMessage("§b§l-> §b" + sc.getUsage());
                 }
             } else {
                 sender.sendMessage("§c§l[WarvalePerms]§c No register commands for provided scope.");
