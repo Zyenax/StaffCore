@@ -31,7 +31,7 @@ public class ChatListener implements Listener {
 
         User user = UserManager.getUser(event.getPlayer());
 
-        event.setFormat(ChatColor.translateAlternateColorCodes('&', user.getPrefix()) + ChatColor.RESET + " " +
+        event.setFormat(ChatColor.translateAlternateColorCodes('&', user.getPrefix()) + ChatColor.RESET +
                 ChatColor.BLUE + user.getName() + ChatColor.RESET + ": " + event.getMessage());
     }
 
