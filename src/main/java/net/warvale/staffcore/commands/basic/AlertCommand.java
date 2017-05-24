@@ -1,6 +1,7 @@
 package net.warvale.staffcore.commands.basic;
 
 
+import net.warvale.staffcore.bossbar.BarManager;
 import net.warvale.staffcore.commands.AbstractCommand;
 import net.warvale.staffcore.exceptions.CommandException;
 import net.warvale.staffcore.message.MessageManager;
@@ -8,6 +9,8 @@ import net.warvale.staffcore.message.PrefixType;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.boss.BarColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -31,7 +34,8 @@ public class AlertCommand extends AbstractCommand {
             return false;
         }
 
-        MessageManager.broadcast(PrefixType.ALERT, ChatColor.translateAlternateColorCodes('&', StringUtils.join(args, ' ', 0, args.length) + "\n"));
+        BarManager.broadcast(PrefixType.ALERT, BarColor.RED, ChatColor.translateAlternateColorCodes('&', StringUtils.join(args, ' ', 0, args.length) + "\n"));
+        BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
 
         return true;
     }

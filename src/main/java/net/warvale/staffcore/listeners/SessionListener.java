@@ -1,6 +1,7 @@
 package net.warvale.staffcore.listeners;
 
 import net.warvale.staffcore.StaffCore;
+import net.warvale.staffcore.bossbar.BarManager;
 import net.warvale.staffcore.message.MessageManager;
 import net.warvale.staffcore.message.PrefixType;
 import net.warvale.staffcore.rank.Rank;
@@ -64,6 +65,8 @@ public class SessionListener implements Listener {
 
 		// We don't have a world yet, we'll refresh again when a player has fully logged in
 		user.refreshPermissions(null);
+
+		BarManager.getAnnounceBar().addPlayer(player);
 	}
 
 	@EventHandler
@@ -80,6 +83,7 @@ public class SessionListener implements Listener {
 			UserManager.getUsers().remove(user);
 		}
 
+		BarManager.getAnnounceBar().removePlayer(player);
 	}
 
 	@EventHandler

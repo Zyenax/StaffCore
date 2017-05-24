@@ -1,5 +1,6 @@
 package net.warvale.staffcore;
 
+import net.warvale.staffcore.bossbar.BarManager;
 import net.warvale.staffcore.commands.*;
 import net.warvale.staffcore.commands.punishments.BanCommand;
 import net.warvale.staffcore.commands.punishments.KickCommand;
@@ -12,6 +13,7 @@ import net.warvale.staffcore.rank.RankManager;
 import net.warvale.staffcore.utils.files.PropertiesFile;
 import net.warvale.staffcore.utils.sql.SQLConnection;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -54,6 +56,8 @@ public class StaffCore extends JavaPlugin {
 
         getCommand("ban").setExecutor(new BanCommand(this));
         getCommand("kick").setExecutor(new KickCommand());
+
+        BarManager.getInstance().setup();
 
     }
 
