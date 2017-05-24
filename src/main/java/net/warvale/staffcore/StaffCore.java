@@ -46,6 +46,10 @@ public class StaffCore extends JavaPlugin {
         cmds = new CommandHandler(this);
         cmds.registerCommands();
 
+<<<<<<< refs/remotes/origin/master
+=======
+
+>>>>>>> fix onEnable
         BarManager.getInstance().setup();
 
     }
