@@ -2,27 +2,20 @@ package net.warvale.staffcore;
 
 import net.warvale.staffcore.bossbar.BarManager;
 import net.warvale.staffcore.commands.*;
-import net.warvale.staffcore.commands.punishments.BanCommand;
-import net.warvale.staffcore.commands.punishments.KickCommand;
 import net.warvale.staffcore.config.ConfigManager;
 import net.warvale.staffcore.listeners.ChatListener;
-import net.warvale.staffcore.listeners.FilterListener;
 import net.warvale.staffcore.listeners.SessionListener;
 import net.warvale.staffcore.message.MessageManager;
 import net.warvale.staffcore.rank.RankManager;
 import net.warvale.staffcore.utils.files.PropertiesFile;
 import net.warvale.staffcore.utils.sql.SQLConnection;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
-
-//import WarnCommand;
 
 public class StaffCore extends JavaPlugin {
 
@@ -52,9 +45,6 @@ public class StaffCore extends JavaPlugin {
 
         cmds = new CommandHandler(this);
         cmds.registerCommands();
-
-        getCommand("ban").setExecutor(new BanCommand(this));
-        getCommand("kick").setExecutor(new KickCommand());
 
         BarManager.getInstance().setup();
 
