@@ -46,8 +46,7 @@ public class StaffCore extends JavaPlugin {
         MessageManager.getInstance().setup();
 
         RankManager.loadRanks();
-
-        getServer().getPluginManager().registerEvents(new FilterListener(), this);
+        
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
         getServer().getPluginManager().registerEvents(new SessionListener(this), this);
 
