@@ -34,7 +34,7 @@ public class AlertCommand extends AbstractCommand {
             return false;
         }
 
-        BarManager.broadcast(PrefixType.ALERT, BarColor.RED, ChatColor.translateAlternateColorCodes('&', StringUtils.join(args, ' ', 0, args.length) + "\n"));
+        BarManager.broadcast(PrefixType.ALERT, BarColor.RED, ChatColor.translateAlternateColorCodes('&', StringUtils.join(args, ' ', 0, args.length)));
         BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
 
         return true;
