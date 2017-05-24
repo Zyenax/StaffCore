@@ -27,6 +27,7 @@ public class PunishmentManager {
 
         try {
             SQLUtil.execute(connection, "punishments", punish);
+            SQLUtil.update(connection, "users", "punishments", (SQLUtil.query(connection, "users", "punishments", new SQLUtil.Where("`uuid` = " + punishment.getUuid())).getInt("punishments") + 1), new SQLUtil.Where("`uuid` = " + punishment.getUuid()));
         } catch (ClassNotFoundException | SQLException e) {
             StaffCore.get().getLogger().log(Level.SEVERE, "UNABLE TO REGISTER PUNISHMENT TO DATABASE", e);
             return null;
@@ -47,6 +48,7 @@ public class PunishmentManager {
 
         try {
             SQLUtil.update(connection, "punishments", "active", false, new SQLUtil.Where(builder.toString()));
+            SQLUtil.update(connection, "users", "punishments", (SQLUtil.query(connection, "users", "punishments", new SQLUtil.Where("`uuid` = " + punishment.getUuid())).getInt("punishments") - 1), new SQLUtil.Where("`uuid` = " + punishment.getUuid()));
         } catch (ClassNotFoundException | SQLException e) {
             StaffCore.get().getLogger().log(Level.SEVERE, "UNABLE TO REVERT A PUNISHMENT IN DATABASE", e);
             return null;
