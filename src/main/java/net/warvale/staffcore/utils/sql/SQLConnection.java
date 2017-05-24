@@ -54,8 +54,13 @@ public class SQLConnection {
     /**
      * @return
      */
-    public Connection getConnection() throws SQLException, ClassNotFoundException {
-        return this.openConnection();
+    public Connection getConnection() {
+        try {
+            return this.openConnection();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public boolean closeConnection() throws SQLException {
