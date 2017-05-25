@@ -3,10 +3,6 @@ main: net.warvale.staffcore.StaffCore
 version: 1.0.0
 author: Warvale
 commands:
-  ban:
-    description: Ban command.
-  kick:
-    description: Kick command.
   sc:
     description: Staff chat.
     aliases: [staffchat]
@@ -14,8 +10,6 @@ commands:
     description: Global mute for whole chat.
   ip:
     description: Displays the IP of a user.
-  check:
-    description: Check a player's history.
   tp:
     description: Teleport command.
   alert:
