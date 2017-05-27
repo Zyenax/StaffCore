@@ -8,7 +8,6 @@ import net.warvale.staffcore.rank.Rank;
 import net.warvale.staffcore.rank.RankManager;
 import net.warvale.staffcore.users.User;
 import net.warvale.staffcore.users.UserManager;
-import net.warvale.staffcore.utils.PlayerManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
