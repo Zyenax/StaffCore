@@ -5,6 +5,8 @@ import net.warvale.staffcore.commands.AbstractCommand;
 import net.warvale.staffcore.commands.SubCommand;
 import net.warvale.staffcore.exceptions.InsufficientArgumentException;
 import net.warvale.staffcore.exceptions.UserNotFoundException;
+import net.warvale.staffcore.message.MessageManager;
+import net.warvale.staffcore.message.PrefixType;
 import net.warvale.staffcore.users.*;
 import org.bukkit.command.CommandSender;
 
@@ -33,10 +35,10 @@ public class UserPrefix extends SubCommand {
                         prefix = prefix + args.get(i) + " ";
                     }
                     user.setMetaPrefix(prefix);
-                    sender.sendMessage("§a§l[MicroPerms] §aPrefix for §n" + user.getName() + "§a set: §f" + user.getMetaPrefix());
+                    sender.sendMessage(MessageManager.getPrefix(PrefixType.PERMS) + " §aPrefix for §n" + user.getName() + "§a set: §f" + user.getMetaPrefix());
                 } else {
                     user.setMetaPrefix(null);
-                    sender.sendMessage("§a§l[MicroPerms] §aPrefix for §n" + user.getName() + "§a removed.");
+                    sender.sendMessage(MessageManager.getPrefix(PrefixType.PERMS) + " §aPrefix for §n" + user.getName() + "§a removed.");
                 }
 
                 // Saves the suer

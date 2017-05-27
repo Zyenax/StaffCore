@@ -1,9 +1,14 @@
 package net.warvale.staffcore.punish.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Draem on 5/22/2017.
  */
 public class Reason {
+
+    public static List<Reason> reasons = new ArrayList<>();
 
     private String reason;
     private String description;
@@ -15,6 +20,7 @@ public class Reason {
         this.description = description;
         this.sev = sev;
         this.type = type;
+        reasons.add(this);
     }
 
     public String getReason() {
@@ -56,5 +62,11 @@ public class Reason {
     @Override
     public String toString() {
         return this.reason;
+    }
+
+    public static List<Reason> getReasonsByParams(PunishmentType type, Severity severity) {
+        List<Reason> reasons = new ArrayList<>();
+        Reason.reasons.stream().filter(reason1 -> reason1.getType().equals(type) && reason1.getSev().equals(severity)).forEach(reasons::add);
+        return reasons;
     }
 }

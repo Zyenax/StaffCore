@@ -1,16 +1,16 @@
 package net.warvale.staffcore.punish.data;
 
 public enum PunishmentType {
-    BAN("Banned"), MUTE("Muted"), WARN("Warned");
+    BAN("Banned", "ban"), MUTE("Muted", "mute"), WARN("Warned", "warn");
 
     public String display;
 
-    PunishmentType(String display) {
+    PunishmentType(String display, String name) {
         this.display = display;
     }
 
     @Override
     public String toString() {
-        return display;
+        return this.name();
     }
 }

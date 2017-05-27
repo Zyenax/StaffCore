@@ -6,6 +6,7 @@ import net.warvale.staffcore.config.ConfigManager;
 import net.warvale.staffcore.listeners.ChatListener;
 import net.warvale.staffcore.listeners.SessionListener;
 import net.warvale.staffcore.message.MessageManager;
+import net.warvale.staffcore.punish.PunishmentManager;
 import net.warvale.staffcore.rank.RankManager;
 import net.warvale.staffcore.utils.files.PropertiesFile;
 import net.warvale.staffcore.utils.sql.SQLConnection;
@@ -42,14 +43,11 @@ public class StaffCore extends JavaPlugin {
         
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
         getServer().getPluginManager().registerEvents(new SessionListener(this), this);
+        getServer().getPluginManager().registerEvents(new PunishmentManager(), this);
 
         cmds = new CommandHandler(this);
         cmds.registerCommands();
 
-<<<<<<< refs/remotes/origin/master
-=======
-
->>>>>>> fix onEnable
         BarManager.getInstance().setup();
 
     }

@@ -5,6 +5,8 @@ import net.warvale.staffcore.commands.AbstractCommand;
 import net.warvale.staffcore.commands.SubCommand;
 import net.warvale.staffcore.exceptions.InsufficientArgumentException;
 import net.warvale.staffcore.exceptions.UserNotFoundException;
+import net.warvale.staffcore.message.MessageManager;
+import net.warvale.staffcore.message.PrefixType;
 import net.warvale.staffcore.users.*;
 import org.bukkit.command.CommandSender;
 
@@ -32,10 +34,10 @@ public class UserSuffix extends SubCommand {
                     }
                     prefix = prefix.substring(1);
                     user.setMetaSuffix(prefix);
-                    sender.sendMessage("§a§l[MicroPerms] §aSuffix for §n" + user.getName() + "§a set: §f" + user.getMetaSuffix());
+                    sender.sendMessage(MessageManager.getPrefix(PrefixType.PERMS) + " §aSuffix for §n" + user.getName() + "§a set: §f" + user.getMetaSuffix());
                 } else {
                     user.setMetaSuffix(null);
-                    sender.sendMessage("§a§l[MicroPerms] §aSuffix for §n" + user.getName() + "§a removed.");
+                    sender.sendMessage(MessageManager.getPrefix(PrefixType.PERMS) + " §aSuffix for §n" + user.getName() + "§a removed.");
                 }
 
                 //saves the users data
