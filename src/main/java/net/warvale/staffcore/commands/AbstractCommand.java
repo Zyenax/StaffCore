@@ -1,6 +1,7 @@
 package net.warvale.staffcore.commands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.warvale.staffcore.StaffCore;
@@ -14,7 +15,7 @@ public abstract class AbstractCommand extends Parser {
 
 
     /**
-     * Constructor for the uhc command super class.
+     * Constructor for the warvale command super class.
      *
      * @param name The name of the command.
      * @param usage the command usage (after /command)
@@ -23,9 +24,7 @@ public abstract class AbstractCommand extends Parser {
         this.usage = usage;
         this.name = name;
 
-        for(SubCommand subCommand : subCommands) {
-            commands.add(subCommand);
-        }
+        commands.addAll(Arrays.asList(subCommands));
     }
 
     protected StaffCore plugin;

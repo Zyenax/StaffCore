@@ -10,6 +10,7 @@ import net.warvale.staffcore.commands.basic.AlertCommand;
 import net.warvale.staffcore.commands.basic.TPCommand;
 import net.warvale.staffcore.commands.chat.GlobalMuteCommand;
 import net.warvale.staffcore.commands.staff.IPCommand;
+import net.warvale.staffcore.commands.staff.PunishCommand;
 import net.warvale.staffcore.commands.staff.StaffChatCommand;
 import net.warvale.staffcore.exceptions.CommandException;
 import net.warvale.staffcore.message.MessageManager;
@@ -136,6 +137,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         //staff
         cmds.add(new IPCommand());
         cmds.add(new StaffChatCommand());
+        cmds.add(new PunishCommand());
 
         for (AbstractCommand cmd : cmds) {
             PluginCommand pCmd = plugin.getCommand(cmd.getName());

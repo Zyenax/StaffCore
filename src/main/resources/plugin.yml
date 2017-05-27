@@ -18,6 +18,8 @@ commands:
     description: Manages the ranks.
   user:
    description: Manage users.
+  pun:
+   description: Punishes a user.
 
 permissions:
   warvale.*:

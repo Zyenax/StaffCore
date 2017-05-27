@@ -29,7 +29,7 @@ public class PunishmentMenu {
     private static List<Integer> reasonslots = Arrays.asList(14, 15, 16, 17, 23, 24, 25, 26, 32, 33, 34, 35, 41, 42, 43, 44);
     private static List<Integer> severitySlots = Arrays.asList(11, 20, 29, 38);
 
-    private static List<PunishmentMenu> menus = new ArrayList<>();
+    public static List<PunishmentMenu> menus = new ArrayList<>();
 
 
     static {
