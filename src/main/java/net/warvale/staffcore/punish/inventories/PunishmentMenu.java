@@ -14,16 +14,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.inventivetalent.menubuilder.inventory.InventoryMenuBuilder;
 
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Draem on 5/24/2017.
  */
-public class
-PunishmentMenu {
+public class PunishmentMenu {
 
     private static ItemStack sevpane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
     private static ItemStack respane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 0);
@@ -31,6 +27,9 @@ PunishmentMenu {
     private static List<Integer> sevslots = Arrays.asList(1, 2, 3, 10, 12, 19, 21, 28, 30, 37, 39, 46, 47, 48);
     private static List<Integer> resslots = Arrays.asList(4, 5, 6, 7, 8, 9, 13, 18, 22, 27, 31, 36, 40, 45, 49, 50, 51, 52, 53, 54);
     private static List<Integer> reasonslots = Arrays.asList(14, 15, 16, 17, 23, 24, 25, 26, 32, 33, 34, 35, 41, 42, 43, 44);
+    private static List<Integer> severitySlots = Arrays.asList(11, 20, 29, 38);
+
+    private static List<PunishmentMenu> menus = new ArrayList<>();
 
 
     static {
@@ -82,9 +81,43 @@ PunishmentMenu {
                     cal.setTime(new Date());
                     cal.add(Calendar.YEAR, 100);
                     PunishmentManager.registerPunishment(new Punishment(PunishmentManager.punishing.get(player.getUniqueId()), Date.from(Instant.now()), cal.getTime(), player.getUniqueId(), reason));
+                } else if (reason.getType().equals(PunishmentType.BAN) && reason.getSev().equals(Severity.SEVERITY_1)) {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(new Date());
+                    cal.add(Calendar.DAY_OF_YEAR, 1);
+                    PunishmentManager.registerPunishment(new Punishment(PunishmentManager.punishing.get(player.getUniqueId()), Date.from(Instant.now()), cal.getTime(), player.getUniqueId(), reason));
+                } else if (reason.getType().equals(PunishmentType.BAN) && reason.getSev().equals(Severity.PERMANENT)) {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(new Date());
+                    cal.add(Calendar.YEAR, 100);
+                    PunishmentManager.registerPunishment(new Punishment(PunishmentManager.punishing.get(player.getUniqueId()), Date.from(Instant.now()), cal.getTime(), player.getUniqueId(), reason));
+                } else if (reason.getType().equals(PunishmentType.WARN) && reason.getSev().equals(Severity.SECOND)) {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(new Date());
+                    cal.add(Calendar.SECOND, 1);
+                    PunishmentManager.registerPunishment(new Punishment(PunishmentManager.punishing.get(player.getUniqueId()), Date.from(Instant.now()), cal.getTime(), player.getUniqueId(), reason));
                 }
             });
+            index++;
         }
+
+        Integer index1 = 0;
+        List<Severity> severities = this.type.getSeverities();
+        assert severities != null;
+        for (Severity sev : severities) {
+            ItemStack severityItem = new ItemStack(Material.PAPER);
+            ItemMeta meta = severityItem.getItemMeta();
+            meta.setDisplayName(ChatUtils.yellow + sev.toString());
+            severityItem.setItemMeta(meta);
+
+            builder.withItem(severitySlots.get(index1), severityItem, (player, clickType, itemStack) -> {
+                player.closeInventory();
+                player.openInventory(getInventory(this.type, sev));
+            });
+            index1++;
+        }
+
+        menus.add(this);
     }
 
     public Inventory getInventory() {
@@ -117,5 +150,9 @@ PunishmentMenu {
 
     public void setSeverity(Severity severity) {
         this.severity = severity;
+    }
+
+    private static Inventory getInventory(PunishmentType type, Severity severity) {
+        return menus.stream().filter(punishmentMenu -> punishmentMenu.getSeverity().equals(severity) && punishmentMenu.getType().equals(type)).findFirst().get().getInventory();
     }
 }
