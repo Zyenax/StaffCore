@@ -89,10 +89,6 @@
             <id>vault-repo</id>
             <url>http://nexus.hc.to/content/repositories/pub_releases</url>
         </repository>
-        <repository>
-            <id>inventive-repo</id>
-            <url>https://repo.inventivetalent.org/content/groups/public/</url>
-        </repository>
     </repositories>
     <dependencies>
         <!--Spigot API-->
@@ -113,11 +109,6 @@
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
             <version>3.9.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.inventivetalent</groupId>
-            <artifactId>menubuilder</artifactId>
-            <version>1.0.2</version>
         </dependency>
     </dependencies>
 </project>

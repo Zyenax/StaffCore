@@ -23,8 +23,5 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.md-5:bungeecord-chat:1.10-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.bukkit:bukkit:1.11-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.jooq:jooq:3.9.2" level="project" />
-    <orderEntry type="library" name="Maven: org.inventivetalent:menubuilder:1.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.bukkit:craftbukkit:1.9.4-R0.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.inventivetalent:itembuilder:1.0.10" level="project" />
   </component>
 </module>
