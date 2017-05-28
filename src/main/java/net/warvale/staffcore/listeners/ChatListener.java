@@ -32,7 +32,7 @@ public class ChatListener implements Listener {
         User user = UserManager.getUser(event.getPlayer());
 
         event.setFormat(ChatColor.translateAlternateColorCodes('&', user.getPrefix()) + ChatColor.RESET +
-                ChatColor.WHITE + user.getName() + ChatColor.RESET + ChatColor.GRAY + ": " + event.getMessage());
+                ChatColor.WHITE + user.getName() + ChatColor.RESET + ChatColor.GRAY + ": " + ChatColor.WHITE + event.getMessage());
     }
 
     public boolean isMuted() {
