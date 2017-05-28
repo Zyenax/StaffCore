@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Reason {
 
-    public static List<Reason> reasons = new ArrayList<>();
+    public static List<Reason> reasonList = new ArrayList<>();
 
     private String reason;
     private String description;
@@ -20,7 +20,7 @@ public class Reason {
         this.description = description;
         this.sev = sev;
         this.type = type;
-        reasons.add(this);
+        reasonList.add(this);
     }
 
     public String getReason() {
@@ -66,7 +66,16 @@ public class Reason {
 
     public static List<Reason> getReasonsByParams(PunishmentType type, Severity severity) {
         List<Reason> reasons = new ArrayList<>();
-        Reason.reasons.stream().filter(reason1 -> reason1.getType().equals(type) && reason1.getSev().equals(severity)).forEach(reasons::add);
+        Reason.reasonList.stream().filter(reason1 -> reason1.getType().equals(type)).filter(reason1 -> reason1.getSev().equals(severity)).forEach(reasons::add);
         return reasons;
+    }
+
+    public static void populate() {
+        new Reason("General Disrespect", "Disrespect of other players in chat/messages", Severity.SECOND, PunishmentType.WARN);
+        new Reason("Discord Advertisement", "Discord Advertisement", Severity.SEVERITY_1, PunishmentType.MUTE);
+        new Reason("Over Capitalization", "Excessive use of caps in chat", Severity.SEVERITY_1, PunishmentType.MUTE);
+        new Reason("Abusing Bugs", "Purposefully abusing known bugs", Severity.SEVERITY_1, PunishmentType.BAN);
+        new Reason("Client Modification", "Advantageous client modification", Severity.PERMANENT, PunishmentType.BAN);
+        new Reason("DDoS Threats", "Threatening to DDoS server or players", Severity.PERMANENT, PunishmentType.BAN);
     }
 }

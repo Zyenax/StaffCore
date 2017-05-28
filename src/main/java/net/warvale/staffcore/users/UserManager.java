@@ -52,8 +52,10 @@ public class UserManager {
     }
 
     public static User getUser(String name) {
+        System.out.println("Trying to get a user from the users arraylist");
         for (User user : getUsers()) {
             if (user.getName().equals(name)) {
+                System.out.println("Found user.");
                 return user;
             }
         }
@@ -116,11 +118,14 @@ public class UserManager {
     }
 
     public static User getSQLUser(String name) {
+        System.out.println("Getting user from the database with the name " + name);
         try {
             PreparedStatement stmt = StaffCore.getDB().getConnection().prepareStatement("SELECT * FROM users WHERE name = ? LIMIT 1;");
             stmt.setString(1, name);
             ResultSet set = stmt.executeQuery();
             if (set.next()) {
+
+                System.out.println("A user with the name " + name + " exists in the database, grabbing data now.");
 
                 UUID uuid = UUID.fromString(set.getString("uuid"));
                 String json = set.getString("data");

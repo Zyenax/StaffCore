@@ -8,11 +8,13 @@ import net.warvale.staffcore.punish.data.Severity;
 import net.warvale.staffcore.utils.chat.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.inventivetalent.menubuilder.inventory.InventoryMenuBuilder;
 
+import java.sql.SQLException;
 import java.time.Instant;
 import java.util.*;
 
@@ -24,10 +26,10 @@ public class PunishmentMenu {
     private static ItemStack sevpane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
     private static ItemStack respane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 0);
 
-    private static List<Integer> sevslots = Arrays.asList(1, 2, 3, 10, 12, 19, 21, 28, 30, 37, 39, 46, 47, 48);
-    private static List<Integer> resslots = Arrays.asList(4, 5, 6, 7, 8, 9, 13, 18, 22, 27, 31, 36, 40, 45, 49, 50, 51, 52, 53, 54);
-    private static List<Integer> reasonslots = Arrays.asList(14, 15, 16, 17, 23, 24, 25, 26, 32, 33, 34, 35, 41, 42, 43, 44);
-    private static List<Integer> severitySlots = Arrays.asList(11, 20, 29, 38);
+    private static List<Integer> sevslots = Arrays.asList(0, 1, 2, 9, 11, 18, 20, 27, 29, 36, 38, 45, 46, 47);
+    private static List<Integer> resslots = Arrays.asList(3, 4, 5, 6, 7, 8, 12, 17, 21, 26, 30, 35, 39, 44, 48, 49, 50, 51, 52, 53);
+    private static List<Integer> reasonslots = Arrays.asList(13, 14, 15, 16, 22, 23, 24, 25, 31, 32, 33, 34, 40, 41, 42, 43);
+    private static List<Integer> severitySlots = Arrays.asList(10, 19, 28, 37);
 
     public static List<PunishmentMenu> menus = new ArrayList<>();
 
@@ -57,6 +59,7 @@ public class PunishmentMenu {
 
         Integer index = 0;
         List<Reason> reasons = Reason.getReasonsByParams(this.type, this.severity);
+        reasons.forEach(reason -> System.out.println(this.type.toString() + " ::: registered reason ::: " + reason.getReason()));
         for (Reason reason : reasons) {
             ItemStack reasonItem = new ItemStack(Material.NAME_TAG);
             ItemMeta meta = reasonItem.getItemMeta();
@@ -97,7 +100,12 @@ public class PunishmentMenu {
                     cal.add(Calendar.SECOND, 1);
                     PunishmentManager.registerPunishment(new Punishment(PunishmentManager.punishing.get(player.getUniqueId()), Date.from(Instant.now()), cal.getTime(), player.getUniqueId(), reason));
                 }
-            });
+                try {
+                    PunishmentManager.updatePunishments();
+                } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }, ClickType.LEFT);
             index++;
         }
 
@@ -113,7 +121,7 @@ public class PunishmentMenu {
             builder.withItem(severitySlots.get(index1), severityItem, (player, clickType, itemStack) -> {
                 player.closeInventory();
                 player.openInventory(getInventory(this.type, sev));
-            });
+            }, ClickType.LEFT);
             index1++;
         }
 
@@ -153,6 +161,6 @@ public class PunishmentMenu {
     }
 
     private static Inventory getInventory(PunishmentType type, Severity severity) {
-        return menus.stream().filter(punishmentMenu -> punishmentMenu.getSeverity().equals(severity) && punishmentMenu.getType().equals(type)).findFirst().get().getInventory();
+        return menus.stream().filter(punishmentMenu -> punishmentMenu.getSeverity().equals(severity) && punishmentMenu.getType().equals(type)).findFirst().get().getBuilder().build();
     }
 }
