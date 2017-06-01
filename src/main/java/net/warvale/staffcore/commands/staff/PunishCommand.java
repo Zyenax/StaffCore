@@ -60,6 +60,20 @@ public class PunishCommand extends AbstractCommand {
 
     @Override
     public List<String> tabComplete(CommandSender sender, String[] args) {
-        return new ArrayList<>();
+        List<String> toReturn =  new ArrayList<>();
+
+        if (args.length == 1) {
+            for (Player online : Bukkit.getServer().getOnlinePlayers()) {
+                toReturn.add(online.getName());
+            }
+        }
+
+        if (args.length == 2) {
+            toReturn.add("mute");
+            toReturn.add("ban");
+            toReturn.add("warn");
+        }
+
+        return toReturn;
     }
 }
