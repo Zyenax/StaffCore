@@ -37,7 +37,7 @@ public class StaffChatCommand extends AbstractCommand {
         Player player = (Player) sender;
         User user = UserManager.getUser(player);
 
-        MessageManager.broadcast(PrefixType.STAFF, ChatColor.translateAlternateColorCodes('&', user.getPrefix() + player.getName() + "&7: &f" +
+        MessageManager.broadcast(PrefixType.STAFF, ChatColor.translateAlternateColorCodes('&', user.getPrefix() + "&f" + player.getName() + "&7: &f" +
                 StringUtils.join(args, ' ', 0, args.length)), "warvale.staffchat");
 
         return true;
