@@ -31,6 +31,7 @@ public class PunishmentManager implements Listener {
     private static List<Punishment> bans = new ArrayList<>();
 
     public static Punishment registerPunishment(Punishment punishment) {
+        System.out.println("Registering punishment.");
         SQLConnection connection = StaffCore.getDB();
         HashMap<String, Object> punish = new HashMap<>();
         punish.put("uuid", punishment.getUuid().toString());
