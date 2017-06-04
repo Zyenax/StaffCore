@@ -1,5 +1,6 @@
 package net.warvale.staffcore.users;
 
+import net.md_5.bungee.api.ChatColor;
 import net.warvale.staffcore.rank.Rank;
 import net.warvale.staffcore.rank.RankManager;
 import net.warvale.staffcore.permissions.Privilege;
@@ -40,6 +41,9 @@ public class User {
     // User-defined prefix/suffixes will override group defined ones.
     private String metaPrefix = null;
     private String metaSuffix = null;
+
+    //the users name color
+    private ChatColor nameColor;
 
     // Bukkit's permission attachment
     private PermissionAttachment attachment = null;
@@ -230,6 +234,14 @@ public class User {
 
     public boolean isSuperUser() {
         return superUser;
+    }
+
+    public ChatColor getNameColor() {
+        return nameColor;
+    }
+
+    public void setNameColor(ChatColor chatColor) {
+        this.nameColor = chatColor;
     }
 
 }

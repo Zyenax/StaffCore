@@ -7,6 +7,7 @@ import net.warvale.staffcore.StaffCore;
 import net.warvale.staffcore.commands.admin.RankCommand;
 import net.warvale.staffcore.commands.admin.UserCommand;
 import net.warvale.staffcore.commands.basic.AlertCommand;
+import net.warvale.staffcore.commands.basic.ColorCommand;
 import net.warvale.staffcore.commands.basic.TPCommand;
 import net.warvale.staffcore.commands.chat.GlobalMuteCommand;
 import net.warvale.staffcore.commands.staff.IPCommand;
@@ -128,6 +129,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         // basic
         cmds.add(new AlertCommand());
         cmds.add(new TPCommand());
+        cmds.add(new ColorCommand());
 
         //chat
         cmds.add(new GlobalMuteCommand());

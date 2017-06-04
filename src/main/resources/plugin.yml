@@ -20,6 +20,8 @@ commands:
    description: Manage users.
   pun:
    description: Punishes a user.
+  color:
+   description: Allows a user to change their name color
 
 permissions:
   warvale.*:

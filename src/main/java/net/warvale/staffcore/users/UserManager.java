@@ -1,5 +1,6 @@
 package net.warvale.staffcore.users;
 
+import net.md_5.bungee.api.ChatColor;
 import net.warvale.staffcore.StaffCore;
 import net.warvale.staffcore.permissions.Privilege;
 import net.warvale.staffcore.rank.Rank;
@@ -142,6 +143,14 @@ public class UserManager {
                 JSONArray privileges = (JSONArray) data.get("privileges");
                 JSONArray ranks = (JSONArray) data.get("ranks");
 
+                ChatColor nameColor;
+
+                try {
+                    nameColor = ChatColor.valueOf((String) data.get("nameColor"));
+                } catch (Exception ex) {
+                    nameColor = ChatColor.WHITE;
+                }
+
                 User user = new User(uuid);
 
                 if (user.getPlayer() == null) {
@@ -153,6 +162,8 @@ public class UserManager {
                 user.setMetaPrefix(prefix);
                 user.setMetaSuffix(suffix);
                 user.setSuperUser(superUser);
+
+                user.setNameColor(nameColor);
 
                 for (Object priv : privileges) {
                     user.getPrivileges().add(new Privilege(((String) priv).split(":")));
@@ -180,6 +191,7 @@ public class UserManager {
         obj.put("prefix", user.getMetaPrefix());
         obj.put("suffix", user.getMetaSuffix());
         obj.put("super", user.isSuperUser());
+        obj.put("nameColor", user.getNameColor().toString() == null ? ChatColor.WHITE.toString() : user.getNameColor().toString());
 
         JSONArray privileges = user.getPrivileges().stream().map(Privilege::toString).collect(Collectors.toCollection(JSONArray::new));
 
