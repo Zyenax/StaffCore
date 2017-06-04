@@ -86,6 +86,8 @@ public class UserManager {
                 JSONArray privileges = (JSONArray) data.get("privileges");
                 JSONArray ranks = (JSONArray) data.get("ranks");
 
+                ChatColor nameColor;
+
                 User user = new User(uuid);
 
                 if (user.getPlayer() == null) {
@@ -97,6 +99,21 @@ public class UserManager {
                 user.setMetaPrefix(prefix);
                 user.setMetaSuffix(suffix);
                 user.setSuperUser(superUser);
+
+                if (!data.containsKey("nameColor")) {
+                    nameColor = ChatColor.WHITE;
+                } else {
+
+                    try {
+                        nameColor = ChatColor.valueOf((String) data.get("nameColor"));
+                    } catch (Exception ex) {
+                        nameColor = ChatColor.WHITE;
+                        ex.printStackTrace();
+                    }
+
+                }
+
+                user.setNameColor(nameColor);
 
                 for (Object priv : privileges) {
                     user.getPrivileges().add(new Privilege(((String) priv).split(":")));
@@ -145,18 +162,6 @@ public class UserManager {
 
                 ChatColor nameColor;
 
-                if (!data.containsKey("nameColor")) {
-                    nameColor = ChatColor.WHITE;
-                } else {
-
-                    try {
-                        nameColor = ChatColor.valueOf((String) data.get("nameColor"));
-                    } catch (Exception ex) {
-                        nameColor = ChatColor.WHITE;
-                    }
-
-                }
-
                 User user = new User(uuid);
 
                 if (user.getPlayer() == null) {
@@ -169,8 +174,21 @@ public class UserManager {
                 user.setMetaSuffix(suffix);
                 user.setSuperUser(superUser);
 
+                if (!data.containsKey("nameColor")) {
+                    nameColor = ChatColor.WHITE;
+                } else {
+
+                    try {
+                        nameColor = ChatColor.valueOf((String) data.get("nameColor"));
+                    } catch (Exception ex) {
+                        nameColor = ChatColor.WHITE;
+                        ex.printStackTrace();
+                    }
+
+                }
 
                 user.setNameColor(nameColor);
+
 
                 for (Object priv : privileges) {
                     user.getPrivileges().add(new Privilege(((String) priv).split(":")));
