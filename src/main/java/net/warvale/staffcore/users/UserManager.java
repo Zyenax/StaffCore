@@ -143,9 +143,19 @@ public class UserManager {
                 JSONArray privileges = (JSONArray) data.get("privileges");
                 JSONArray ranks = (JSONArray) data.get("ranks");
 
-                String color = (String) data.get("nameColor");
                 ChatColor nameColor;
 
+                if (!data.containsKey("nameColor")) {
+                    nameColor = ChatColor.WHITE;
+                } else {
+
+                    try {
+                        nameColor = ChatColor.valueOf((String) data.get("nameColor"));
+                    } catch (Exception ex) {
+                        nameColor = ChatColor.WHITE;
+                    }
+
+                }
 
                 User user = new User(uuid);
 
@@ -159,17 +169,6 @@ public class UserManager {
                 user.setMetaSuffix(suffix);
                 user.setSuperUser(superUser);
 
-                try {
-
-                    if (!color.isEmpty()) {
-                        nameColor = ChatColor.valueOf(color);
-                    } else {
-                        nameColor = ChatColor.WHITE;
-                    }
-
-                } catch (Exception ex) {
-                    nameColor = ChatColor.WHITE;
-                }
 
                 user.setNameColor(nameColor);
 
@@ -199,7 +198,7 @@ public class UserManager {
         obj.put("prefix", user.getMetaPrefix());
         obj.put("suffix", user.getMetaSuffix());
         obj.put("super", user.isSuperUser());
-        obj.put("nameColor", user.getNameColor().toString().isEmpty() ? ChatColor.WHITE.toString() : user.getNameColor().toString());
+        obj.put("nameColor", user.getNameColor() == null ? ChatColor.WHITE.toString() : user.getNameColor().toString());
 
         JSONArray privileges = user.getPrivileges().stream().map(Privilege::toString).collect(Collectors.toCollection(JSONArray::new));
 

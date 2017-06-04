@@ -45,6 +45,7 @@ public class ColorCommand extends AbstractCommand {
 
                 player.sendMessage(MessageManager.getPrefix(PrefixType.MAIN) + "Your chat color preference has been saved.");
 
+
             } catch (Exception ex) {
                 throw new CommandException("That is not a valid color");
             }
@@ -53,33 +54,29 @@ public class ColorCommand extends AbstractCommand {
             throw new CommandException("Could not find your account in our database, this may be a temporary issue, please try again soon.");
         }
 
-        return false;
+        return true;
     }
 
     @Override
     public List<String> tabComplete(CommandSender sender, String[] args) {
         List<String> toReturn = new ArrayList<>();
 
-        if (args.length == 1) {
-            //add the chatcolors
-            toReturn.add(ChatColor.BLACK.toString());
-            toReturn.add(ChatColor.DARK_BLUE.toString());
-            toReturn.add(ChatColor.DARK_GREEN.toString());
-            toReturn.add(ChatColor.DARK_AQUA.toString());
-            toReturn.add(ChatColor.DARK_RED.toString());
-            toReturn.add(ChatColor.DARK_PURPLE.toString());
-            toReturn.add(ChatColor.GOLD.toString());
-            toReturn.add(ChatColor.GRAY.toString());
-            toReturn.add(ChatColor.DARK_GRAY.toString());
-            toReturn.add(ChatColor.BLUE.toString());
-            toReturn.add(ChatColor.GREEN.toString());
-            toReturn.add(ChatColor.AQUA.toString());
-            toReturn.add(ChatColor.RED.toString());
-            toReturn.add(ChatColor.LIGHT_PURPLE.toString());
-            toReturn.add(ChatColor.YELLOW.toString());
-            toReturn.add(ChatColor.WHITE.toString());
-        }
-
+        toReturn.add(ChatColor.BLACK.toString());
+        toReturn.add(ChatColor.DARK_BLUE.toString());
+        toReturn.add(ChatColor.DARK_GREEN.toString());
+        toReturn.add(ChatColor.DARK_AQUA.toString());
+        toReturn.add(ChatColor.DARK_RED.toString());
+        toReturn.add(ChatColor.DARK_PURPLE.toString());
+        toReturn.add(ChatColor.GOLD.toString());
+        toReturn.add(ChatColor.GRAY.toString());
+        toReturn.add(ChatColor.DARK_GRAY.toString());
+        toReturn.add(ChatColor.BLUE.toString());
+        toReturn.add(ChatColor.GREEN.toString());
+        toReturn.add(ChatColor.AQUA.toString());
+        toReturn.add(ChatColor.RED.toString());
+        toReturn.add(ChatColor.LIGHT_PURPLE.toString());
+        toReturn.add(ChatColor.YELLOW.toString());
+        toReturn.add(ChatColor.WHITE.toString());
 
         return toReturn;
     }
