@@ -216,7 +216,7 @@ public class UserManager {
         obj.put("prefix", user.getMetaPrefix());
         obj.put("suffix", user.getMetaSuffix());
         obj.put("super", user.isSuperUser());
-        obj.put("nameColor", user.getNameColor() == null ? ChatColor.WHITE.toString() : user.getNameColor().toString());
+        obj.put("nameColor", user.getNameColor() == null ? ChatColor.WHITE.getName().toUpperCase() : user.getNameColor().getName().toUpperCase());
 
         JSONArray privileges = user.getPrivileges().stream().map(Privilege::toString).collect(Collectors.toCollection(JSONArray::new));
 

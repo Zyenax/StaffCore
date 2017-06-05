@@ -7,6 +7,7 @@ import net.warvale.staffcore.message.MessageManager;
 import net.warvale.staffcore.message.PrefixType;
 import net.warvale.staffcore.users.User;
 import net.warvale.staffcore.users.UserManager;
+import net.warvale.staffcore.utils.chat.ChatColors;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -61,22 +62,9 @@ public class ColorCommand extends AbstractCommand {
     public List<String> tabComplete(CommandSender sender, String[] args) {
         List<String> toReturn = new ArrayList<>();
 
-        toReturn.add(ChatColor.BLACK.toString());
-        toReturn.add(ChatColor.DARK_BLUE.toString());
-        toReturn.add(ChatColor.DARK_GREEN.toString());
-        toReturn.add(ChatColor.DARK_AQUA.toString());
-        toReturn.add(ChatColor.DARK_RED.toString());
-        toReturn.add(ChatColor.DARK_PURPLE.toString());
-        toReturn.add(ChatColor.GOLD.toString());
-        toReturn.add(ChatColor.GRAY.toString());
-        toReturn.add(ChatColor.DARK_GRAY.toString());
-        toReturn.add(ChatColor.BLUE.toString());
-        toReturn.add(ChatColor.GREEN.toString());
-        toReturn.add(ChatColor.AQUA.toString());
-        toReturn.add(ChatColor.RED.toString());
-        toReturn.add(ChatColor.LIGHT_PURPLE.toString());
-        toReturn.add(ChatColor.YELLOW.toString());
-        toReturn.add(ChatColor.WHITE.toString());
+        for (ChatColors color : ChatColors.values()) {
+            toReturn.add(color.toString());
+        }
 
         return toReturn;
     }
